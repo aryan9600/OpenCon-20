@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "148274144023",
+    "firebase_url": "https://opencon-20.firebaseio.com",
+    "project_id": "opencon-20",
+    "storage_bucket": "opencon-20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148274144023:android:45b7631c14940b94e44d52",
+        "android_client_info": {
+          "package_name": "com.ieeevit.open_con"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148274144023-8n2v03svksecm12hrmembqo9vhogshuh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ieeevit.open_con",
+            "certificate_hash": "931a49157b8b7b37f3f33066225c048b4cf587da"
+          }
+        },
+        {
+          "client_id": "148274144023-2nda7980pakm10fbdmo1josqtlnj5vju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMOhw6YOIKrPDb7P_k7v3G24at2-9x42Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148274144023-2nda7980pakm10fbdmo1josqtlnj5vju.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "148274144023-qbsm9j7f8crn9c1j7ktotk7epc356h16.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.openCon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148274144023:android:8ca2cb66592b1cb7e44d52",
+        "android_client_info": {
+          "package_name": "com.ieeevit.open_con_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148274144023-2nda7980pakm10fbdmo1josqtlnj5vju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMOhw6YOIKrPDb7P_k7v3G24at2-9x42Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148274144023-2nda7980pakm10fbdmo1josqtlnj5vju.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "148274144023-qbsm9j7f8crn9c1j7ktotk7epc356h16.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.openCon"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
