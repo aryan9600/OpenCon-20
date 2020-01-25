@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:open_con/models/github_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 // All authentication methods reside inside this class.
 class Auth with ChangeNotifier {
@@ -27,6 +31,34 @@ class Auth with ChangeNotifier {
     return _userName;
   }
 
+
+	Future<FirebaseUser> loginWithGitHub(String code) async {
+		//ACCESS TOKEN REQUEST
+		final response = await http.post(
+			"https://github.com/login/oauth/access_token",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			},
+			body: jsonEncode(GitHubLoginRequest(
+				clientId: '968c0277a36abe9c5c9d',
+				clientSecret: '41a5d74c10845caa18d4046fcfecc47b0822fd52',
+				code: code,
+			)),
+		);
+
+		GitHubLoginResponse loginResponse =
+				GitHubLoginResponse.fromJson(json.decode(response.body));
+
+		//FIREBASE STUFF
+		final AuthCredential credential = GithubAuthProvider.getCredential(
+			token: loginResponse.accessToken,
+		);
+
+		final AuthResult user = await FirebaseAuth.instance.signInWithCredential(credential);
+		return user.user;
+	}
+	
 	// Signing in a user with his/her Google account.
 	Future<FirebaseUser> signInWithGoogle() async {
 		try{

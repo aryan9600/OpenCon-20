@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_con/providers/auth.dart';
+import 'package:open_con/backend/auth.dart';
 import 'package:open_con/screens/auth_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:provider/provider.dart';
@@ -21,12 +21,15 @@ class MyApp extends StatelessWidget {
 		    	theme: ThemeData(
 		    		primarySwatch: Colors.blue,
 		    	),
-		    	home: RegisterScreen()
+		    	home: AuthScreen(),
+					routes: {
+						RegisterScreen.routeName: (ctx) => RegisterScreen(),
+						
+					},
 		    ),
 		  ),
 		);
 	}
 }
-
 
 
