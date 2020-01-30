@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:open_con/models/github_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 // All authentication methods reside inside this class.
 class Auth with ChangeNotifier {
@@ -32,8 +33,26 @@ class Auth with ChangeNotifier {
   }
 
 
+	void onClickGitHubLoginButton() async {
+		const String url = "https://github.com/login/oauth/authorize" +
+				"?client_id=" + "3989be5fca8cc25bfac6" +
+				"&scope=public_repo%20read:user%20user:email";
+
+		if (await canLaunch(url)) {
+			await launch(
+				url,
+				forceSafariVC: false,
+				forceWebView: false,
+			);
+		} else {
+			print("CANNOT LAUNCH THIS URL!");
+		}
+	}
+
+
 	Future<FirebaseUser> loginWithGitHub(String code) async {
 		//ACCESS TOKEN REQUEST
+		print(code);
 		final response = await http.post(
 			"https://github.com/login/oauth/access_token",
 			headers: {
@@ -41,20 +60,22 @@ class Auth with ChangeNotifier {
 				"Accept": "application/json"
 			},
 			body: jsonEncode(GitHubLoginRequest(
-				clientId: '968c0277a36abe9c5c9d',
-				clientSecret: '41a5d74c10845caa18d4046fcfecc47b0822fd52',
+				clientId: '3989be5fca8cc25bfac6',
+				clientSecret: '2ef8dd7b4ef3080a334f44a65c563b828813e3e5',
 				code: code,
 			)),
 		);
+		print(response.body);
 
 		GitHubLoginResponse loginResponse =
 				GitHubLoginResponse.fromJson(json.decode(response.body));
-
+		
+		print(loginResponse);
 		//FIREBASE STUFF
 		final AuthCredential credential = GithubAuthProvider.getCredential(
 			token: loginResponse.accessToken,
 		);
-
+		print('we got here');
 		final AuthResult user = await FirebaseAuth.instance.signInWithCredential(credential);
 		return user.user;
 	}

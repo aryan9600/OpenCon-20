@@ -8,7 +8,6 @@ import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 
 class AuthScreen extends StatefulWidget {
@@ -40,8 +39,10 @@ class _AuthScreenState extends State<AuthScreen> {
 
 	void _checkDeepLink(String link) {
     if (link != null) {
+			print('yes pls');
+			print(link);
       String code = link.substring(link.indexOf(RegExp('code=')) + 5);
-      Provider.of<Auth>(context).loginWithGitHub(code)
+      Provider.of<Auth>(context, listen: false).loginWithGitHub(code)
         .then((firebaseUser) {
           print("LOGGED IN AS: " + firebaseUser.displayName);
         }).catchError((e) {
@@ -59,24 +60,6 @@ class _AuthScreenState extends State<AuthScreen> {
       _subs = null;
     }
   }
-
-	
-	void onClickGitHubLoginButton() async {
-		const String url = "https://github.com/login/oauth/authorize" +
-				"?client_id=" + "968c0277a36abe9c5c9d" +
-				"&scope=public_repo%20read:user%20user:email";
-
-		if (await canLaunch(url)) {
-			await launch(
-				url,
-				forceSafariVC: false,
-				forceWebView: false,
-			);
-		} else {
-			print("CANNOT LAUNCH THIS URL!");
-		}
-	}
-
 
 	@override
 	Widget build(BuildContext context) {
@@ -112,7 +95,7 @@ class _AuthScreenState extends State<AuthScreen> {
 										  	textColor: Colors.black,
 										  	shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*1.5)),
 										  	child: Row(
-													mainAxisAlignment: MainAxisAlignment.center,
+													mainAxisAlignment: MainAxisAlignment.spaceAround,
 									      	children: <Widget>[
 														Container(
 															child: Image.asset('assets/google_logo.png'),
@@ -145,10 +128,11 @@ class _AuthScreenState extends State<AuthScreen> {
 										  	textColor: Colors.black,
 										  	shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*1.5)),
 										  	child: Row(
-													mainAxisAlignment: MainAxisAlignment.center,
+													mainAxisAlignment: MainAxisAlignment.spaceAround,
 									      	children: <Widget>[
 														Container(
-															child: Image.asset('assets/google_logo.png'),
+															padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*1.7, 0, SizeConfig.blockSizeVertical*1.7),
+															child: Image.asset('assets/github.png', height: SizeConfig.blockSizeVertical*4,),
 															width: SizeConfig.blockSizeHorizontal*13,
 														),
 														Text('Continue with GitHub', style: TextStyle(
@@ -158,7 +142,9 @@ class _AuthScreenState extends State<AuthScreen> {
 														),)
 									      	],
 												),
-												onPressed: onClickGitHubLoginButton,
+												onPressed: (){
+													Provider.of<Auth>(context, listen: false).onClickGitHubLoginButton();
+												},
 											)
 										)
 									]

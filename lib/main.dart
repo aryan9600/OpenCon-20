@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_con/backend/auth.dart';
-import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/screens/auth_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
-import 'package:open_con/screens/timeline_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +46,7 @@ class MyApp extends StatelessWidget {
 							textTheme: ButtonTextTheme.normal
 						),
 		    	),
-		    	home: AboutEventScreen(),
+		    	home: AuthScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 					},

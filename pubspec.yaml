@@ -54,6 +54,7 @@ flutter:
     - assets/opencon_logo.png
     - assets/google_logo.png
     - assets/frame.png
+    - assets/github.png
 
   fonts:
     - family: Blinker
