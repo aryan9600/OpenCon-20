@@ -85,7 +85,7 @@ class TimeLineRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ListTile(
-                title: Text(name),
+                title: Text(name, style: TextStyle(color: ThemeData.dark().accentColor),),
                 subtitle: Text(location),
               )
             ],

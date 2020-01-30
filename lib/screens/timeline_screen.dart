@@ -21,6 +21,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
             Container(
               color: Theme.of(context).canvasColor,
             ),
+
             SingleChildScrollView(
               child: Center(
                 child: Column(
@@ -29,13 +30,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   children: <Widget>[
                     SizedBox(height: SizeConfig.blockSizeVertical*3),
                     Container(
-                      height: SizeConfig.blockSizeVertical*15,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/opencon_logo.png')
-                        )
-                      ),
+                      padding: EdgeInsets.fromLTRB(0, 0, SizeConfig.screenWidth/2.7, SizeConfig.blockSizeVertical*2),
+                      child: Text('START', style: TextStyle(
+                        color: ThemeData.dark().accentColor,
+                        fontSize: SizeConfig.blockSizeVertical*3
+                      ),),
                     ),
+                    
                     StreamBuilder<QuerySnapshot>(
                       stream: Firestore.instance.collection("events").snapshots(),
                       builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -51,7 +52,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                               children: snapshot.data.documents.map((DocumentSnapshot document) {
                                 print(document['time']);
                                 return new TimeLineRow(
-                                  date:  document['time'].toDate().toString(),
+                                  date:  "13th March",
                                   time: "12:00 AM",
                                   name: document['title'],
                                   location: document['location'],
@@ -60,6 +61,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             );
                         }
                       },
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*2, SizeConfig.screenWidth/2.7, 0),
+                      child: Text('END', style: TextStyle(
+                        color: ThemeData.dark().accentColor,
+                        fontSize: SizeConfig.blockSizeVertical*3
+                      ),),
                     ),
                     SizedBox(height: SizeConfig.screenHeight/10,)
                   ],

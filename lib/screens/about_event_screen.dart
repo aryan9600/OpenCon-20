@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/speaker_card.dart';
+import 'package:open_con/widgets/sponsor_card.dart';
 
 class AboutEventScreen extends StatefulWidget {
   @override
@@ -87,6 +88,38 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                                 // autoplayDelay: 3000,
                               ),
                             ); 
+                        }
+                      },
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical*2),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
+                      child: Text('SPONSORS', style: TextStyle(
+                        color: Color(0xff00B7D0),
+                        fontWeight: FontWeight.w600,
+                        fontSize: SizeConfig.blockSizeVertical*3.6,
+                      )),
+                    ),
+                    StreamBuilder(
+                      stream: Firestore.instance.collection("sponsors").snapshots(),
+                      builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
+                        if(snapshot.hasError){
+                          print('Error ${snapshot.error}');
+                        }
+                        switch(snapshot.connectionState){
+                          case ConnectionState.waiting: return Text('Fetching');
+                          default:
+                            return GridView.count(
+                              padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*6),
+                              primary: false,
+                              shrinkWrap: true,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: SizeConfig.blockSizeVertical*3,
+                              mainAxisSpacing: SizeConfig.blockSizeVertical*2,
+                              children: snapshot.data.documents.map((DocumentSnapshot document){
+                                return SponsorCard(document['logoUrl']);
+                              }).toList()
+                            );
                         }
                       },
                     )
