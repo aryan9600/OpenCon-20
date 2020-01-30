@@ -69,8 +69,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                           case ConnectionState.waiting: return Text('Fetching');
                           default:
                             return Container(
-                              height: SizeConfig.blockSizeVertical*25,
-                              width: SizeConfig.screenWidth/0.4,
+                              height: SizeConfig.screenHeight/2.5,
                               child: Swiper(
                                 itemCount: snapshot.data.documents.length,
                                 itemBuilder: (BuildContext ctx, int index) {
@@ -78,12 +77,14 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                                     name: snapshot.data.documents[index]['name'],
                                     description: snapshot.data.documents[index]['description'],
                                     imgUrl: snapshot.data.documents[index]['imgUrl'],
+                                    company: snapshot.data.documents[index]['company'],
+                                    designation: snapshot.data.documents[index]['designation'],
                                   );
                                 },
                                 viewportFraction: 0.69,
                                 scale: 0.7,
-                                autoplay: true,
-                                autoplayDelay: 3000,
+                                // autoplay: true,
+                                // autoplayDelay: 3000,
                               ),
                             ); 
                         }
