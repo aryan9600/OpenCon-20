@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_con/backend/auth.dart';
+import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/screens/auth_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/screens/timeline_screen.dart';
@@ -28,11 +29,11 @@ class MyApp extends StatelessWidget {
 						primaryTextTheme: TextTheme(
 							headline: TextStyle(
 								color: Color(0xff00B7D0),
-								fontWeight: FontWeight.bold
+								fontWeight: FontWeight.bold,
 							),
 							title: TextStyle(
 								color: Colors.white,
-								fontWeight: FontWeight.w400
+								fontWeight: FontWeight.w400,
 							),
 							subtitle: TextStyle(
 								color: Color.fromRGBO(255, 255, 255, 0.5),
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
 							textTheme: ButtonTextTheme.normal
 						),
 		    	),
-		    	home: TimelineScreen(),
+		    	home: AboutEventScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 					},
