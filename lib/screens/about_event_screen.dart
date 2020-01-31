@@ -29,15 +29,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: SizeConfig.blockSizeVertical*3),
-                    Container(
-                      height: SizeConfig.blockSizeVertical*15,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/opencon_logo.png')
-                        )
-                      ),
-                    ),
+                   
                     SizedBox(height: SizeConfig.blockSizeVertical*3),
                     Text('ABOUT OPENCON', style: TextStyle(
                       color: Color(0xff00B7D0),

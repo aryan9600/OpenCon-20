@@ -2,12 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:open_con/models/github_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
+
+
+	String githubClientID = DotEnv().env['CLIENT_ID'];
+	String githubClientSecret = DotEnv().env['CLIENT_SECRET'];
 // All authentication methods reside inside this class.
 class Auth with ChangeNotifier {
 	final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -15,6 +20,7 @@ class Auth with ChangeNotifier {
 	String _uIdToken;
 	String _userEmail;
   String _userName;
+
 
 	bool get isAuth {
 		return uIdToken != null;
@@ -34,8 +40,8 @@ class Auth with ChangeNotifier {
 
 
 	void onClickGitHubLoginButton() async {
-		const String url = "https://github.com/login/oauth/authorize" +
-				"?client_id=" + "3989be5fca8cc25bfac6" +
+		String url = "https://github.com/login/oauth/authorize" +
+				"?client_id=" +"$githubClientID"+
 				"&scope=public_repo%20read:user%20user:email";
 
 		if (await canLaunch(url)) {
@@ -60,8 +66,8 @@ class Auth with ChangeNotifier {
 				"Accept": "application/json"
 			},
 			body: jsonEncode(GitHubLoginRequest(
-				clientId: '3989be5fca8cc25bfac6',
-				clientSecret: '2ef8dd7b4ef3080a334f44a65c563b828813e3e5',
+				clientId: githubClientID,
+				clientSecret: githubClientSecret,
 				code: code,
 			)),
 		);
