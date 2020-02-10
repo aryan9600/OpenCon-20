@@ -7,11 +7,13 @@ import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/screens/timeline_screen.dart';
 import 'package:open_con/utils/size_config.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 
 void main() async {
   await DotEnv().load('.ENV');
+	 Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.microphone,]);
 	runApp(MyApp());
 }
 
