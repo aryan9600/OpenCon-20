@@ -27,7 +27,7 @@ class SpeakerCard extends StatelessWidget {
             offset: Offset(SizeConfig.blockSizeVertical, SizeConfig.blockSizeVertical)
           ),
           BoxShadow(
-            color: Colors.grey[800].withOpacity(0.12),
+            color: Colors.grey[900].withOpacity(0.3),
             blurRadius: SizeConfig.blockSizeVertical*1.7,
             spreadRadius: SizeConfig.blockSizeHorizontal/3,
             offset: Offset(-SizeConfig.blockSizeVertical, -SizeConfig.blockSizeVertical)

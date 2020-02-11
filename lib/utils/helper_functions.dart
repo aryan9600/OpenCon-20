@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class HelperFunctions{
+	
 	void showErrorDialog(String error, BuildContext context){
 		showDialog(
 			context: context,
