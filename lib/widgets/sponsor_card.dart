@@ -18,6 +18,23 @@ class SponsorCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*2)),
         elevation: 20,
         child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*3),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey[900].withOpacity(0.8),
+                blurRadius: SizeConfig.blockSizeVertical*1.7,
+                spreadRadius: SizeConfig.blockSizeHorizontal/3,
+                offset: Offset(SizeConfig.blockSizeVertical, SizeConfig.blockSizeVertical)
+              ),
+              BoxShadow(
+                color: Colors.grey[800].withOpacity(0.12),
+                blurRadius: SizeConfig.blockSizeVertical*1.7,
+                spreadRadius: SizeConfig.blockSizeHorizontal/3,
+                offset: Offset(-SizeConfig.blockSizeVertical, -SizeConfig.blockSizeVertical)
+              ),
+            ]
+          ),
           height: SizeConfig.blockSizeVertical*15,
           width: SizeConfig.screenWidth/4,
           child: Image.network(logoUrl),

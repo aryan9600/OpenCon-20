@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:open_con/utils/helper_functions.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/timeline_row.dart';
 
@@ -13,6 +15,8 @@ class _TimelineScreenState extends State<TimelineScreen> {
   Widget build(BuildContext context) {
 
     SizeConfig().init(context);
+
+    final help = HelperFunctions();
 
     return Scaffold(
       body: SafeArea(
@@ -32,7 +36,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 0, SizeConfig.screenWidth/2.7, SizeConfig.blockSizeVertical*2),
                       child: Text('START', style: TextStyle(
-                        color: ThemeData.dark().accentColor,
+                        color: Color(0xff00B7D0),
                         fontSize: SizeConfig.blockSizeVertical*3
                       ),),
                     ),
@@ -50,10 +54,9 @@ class _TimelineScreenState extends State<TimelineScreen> {
                               shrinkWrap: true,
                               primary: false,
                               children: snapshot.data.documents.map((DocumentSnapshot document) {
-                                print(document['time']);
                                 return new TimeLineRow(
-                                  date:  "13th March",
-                                  time: "12:00 AM",
+                                  date:  help.timestampToDate(document['time']),
+                                  time: help.timestampToTime(document['time']),
                                   name: document['title'],
                                   location: document['location'],
                                 );
@@ -65,7 +68,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     Container(
                       padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*2, SizeConfig.screenWidth/2.7, 0),
                       child: Text('END', style: TextStyle(
-                        color: ThemeData.dark().accentColor,
+                        color: Color(0xff00B7D0),
                         fontSize: SizeConfig.blockSizeVertical*3
                       ),),
                     ),

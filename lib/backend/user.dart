@@ -13,10 +13,6 @@ class User{
         'name': name,
         'teamName': team,
         'email': email,
-        'dayOneLunch': false,
-        'dayOneDinner': false,
-        'dayTwoLunch': false,
-        'midnightSnacks': false
       });
       return 'User registered successfully';
     } catch(error){

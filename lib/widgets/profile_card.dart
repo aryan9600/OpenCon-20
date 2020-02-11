@@ -22,15 +22,15 @@ class ProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*3),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[900].withOpacity(0.6),
+            color: Colors.grey[900].withOpacity(0.8),
             blurRadius: SizeConfig.blockSizeVertical*1.7,
             spreadRadius: SizeConfig.blockSizeHorizontal/3,
             offset: Offset(SizeConfig.blockSizeVertical, SizeConfig.blockSizeVertical)
           ),
           BoxShadow(
-            color: Colors.grey[800].withOpacity(0.22),
+            color: Colors.grey[800].withOpacity(0.12),
             blurRadius: SizeConfig.blockSizeVertical*1.7,
-            spreadRadius: SizeConfig.blockSizeHorizontal/5,
+            spreadRadius: SizeConfig.blockSizeHorizontal/3,
             offset: Offset(-SizeConfig.blockSizeVertical, -SizeConfig.blockSizeVertical)
           ),
         ]

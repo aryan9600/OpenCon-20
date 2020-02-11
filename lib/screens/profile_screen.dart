@@ -94,8 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Stack(
           children: <Widget>[
             Container(
-            //  color: ThemeData.dark().canvasColor,
-                color: Color(0xff232526),
+              color: Color(0xff232526),
             ),
             SingleChildScrollView(
               child: Center(
@@ -114,7 +113,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileCard(),
                     SizedBox(height: SizeConfig.blockSizeVertical*6),
                     Container(
-                      
                       height: SizeConfig.blockSizeVertical*7,
                       width: SizeConfig.blockSizeHorizontal*60,
                       child: RaisedButton(

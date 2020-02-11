@@ -23,7 +23,7 @@ class TimeLineRow extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 title: Text(time, textAlign: TextAlign.end,),
-                subtitle: Text(date),
+                subtitle: Text(date, textAlign: TextAlign.end,),
               )
             ],
           ),
@@ -40,7 +40,7 @@ class TimeLineRow extends StatelessWidget {
                 width: SizeConfig.blockSizeHorizontal*0.8,
                 height: SizeConfig.blockSizeVertical*5.5,
                 decoration: new BoxDecoration(
-                  color: ThemeData.dark().accentColor,
+                  color: Color(0xff00B7D0),
                   shape: BoxShape.rectangle,
                 ),
                 child: Text(""),
@@ -58,7 +58,7 @@ class TimeLineRow extends StatelessWidget {
                       offset: Offset(0, SizeConfig.blockSizeHorizontal), 
                     )
                   ],
-                  color: ThemeData.dark().accentColor,
+                  color: Color(0xff00B7D0),
                   shape: BoxShape.circle,
                 ),
                 child: Text(""),
@@ -68,7 +68,7 @@ class TimeLineRow extends StatelessWidget {
                 width: SizeConfig.blockSizeHorizontal*0.8,
                 height: SizeConfig.blockSizeVertical*5.5,
                 decoration: new BoxDecoration(
-                  color: ThemeData.dark().accentColor,
+                  color: Color(0xff00B7D0),
                   shape: BoxShape.rectangle,
                 ),
                 child: Text(""),
@@ -85,7 +85,7 @@ class TimeLineRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ListTile(
-                title: Text(name, style: TextStyle(color: ThemeData.dark().accentColor),),
+                title: Text(name, style: TextStyle(color: Color(0xff00B7D0)),),
                 subtitle: Text(location),
               )
             ],

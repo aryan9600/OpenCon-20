@@ -114,7 +114,8 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                             );
                         }
                       },
-                    )
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical*5,)
                   ],
                 ),
               ),

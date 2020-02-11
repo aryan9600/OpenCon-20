@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
 							textTheme: ButtonTextTheme.normal
 						),
 		    	),
-		    	home: ProfileScreen(),
+		    	home: TimelineScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 					},
