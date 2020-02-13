@@ -1,8 +1,11 @@
 	// Template for error dialog
-	import 'package:flutter/material.dart';
+	import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-void showErrorDialog(String error, BuildContext context){
+class HelperFunctions{
+	
+	void showErrorDialog(String error, BuildContext context){
 		showDialog(
 			context: context,
 			builder: (ctx) => AlertDialog(
@@ -18,14 +21,15 @@ void showErrorDialog(String error, BuildContext context){
 		);
 	}
 
-	String formatTimestampDate(DateTime timestamp) {
-		  var formatter = new DateFormat('yyyy-MM-dd');
-			String formattedDate = formatter.format(timestamp);
-			return formattedDate;
-}
+	String timestampToDate(Timestamp time){
+		final df = DateFormat('dd MMM');
+		final formattedDate = df.format(time.toDate());
+		return formattedDate.toString();
+	}
 
-// String formatTimestampTime(int timestamp) {
-//       var format = new DateFormat('d MMM, hh:mm a');
-//       var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-//       return format.format(date);
-//     }
+	String timestampToTime(Timestamp time){
+		final df = DateFormat('hh:mm a');
+		final formattedDate = df.format(time.toDate());
+		return formattedDate.toString();
+	}
+}

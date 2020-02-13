@@ -13,10 +13,6 @@ class User{
         'name': name,
         'teamName': team,
         'email': email,
-        'dayOneLunch': false,
-        'dayOneDinner': false,
-        'dayTwoLunch': false,
-        'midnightSnacks': false
       });
       return 'User registered successfully';
     } catch(error){
@@ -29,9 +25,24 @@ class User{
     try{
       databaseReference
         .collection("users")
-        .document("token")
+        .document(token)
         .updateData({'name': name, 'teamName': team});
       return 'User updated successfully';
+    }catch(error){
+      throw error;
+    }
+  }
+
+  Future<DocumentSnapshot> getUser(String token) async{
+    try{
+      DocumentSnapshot user;
+      await databaseReference
+        .collection("users")
+        .document(token)
+        .get().then((snap){
+          user = snap;
+        });
+      return user;
     }catch(error){
       throw error;
     }

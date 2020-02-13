@@ -3,14 +3,17 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_con/backend/auth.dart';
 import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/screens/auth_screen.dart';
+import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/screens/timeline_screen.dart';
 import 'package:open_con/utils/size_config.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 
 void main() async {
   await DotEnv().load('.ENV');
+	 Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.microphone,]);
 	runApp(MyApp());
 }
 
@@ -56,6 +59,7 @@ class MyApp extends StatelessWidget {
 		    	home: AuthScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
+						ProfileScreen.routeName: (ctx) => ProfileScreen()
 					},
 		    ),
 		  ),
