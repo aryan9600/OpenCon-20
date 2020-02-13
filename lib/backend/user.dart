@@ -25,9 +25,24 @@ class User{
     try{
       databaseReference
         .collection("users")
-        .document("token")
+        .document(token)
         .updateData({'name': name, 'teamName': team});
       return 'User updated successfully';
+    }catch(error){
+      throw error;
+    }
+  }
+
+  Future<DocumentSnapshot> getUser(String token) async{
+    try{
+      DocumentSnapshot user;
+      await databaseReference
+        .collection("users")
+        .document(token)
+        .get().then((snap){
+          user = snap;
+        });
+      return user;
     }catch(error){
       throw error;
     }

@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:open_con/backend/auth.dart';
+import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:provider/provider.dart';
@@ -112,7 +113,8 @@ class _AuthScreenState extends State<AuthScreen> {
 										  		print('something');
 										  		try{
 										  			 Provider.of<Auth>(context, listen: false).signInWithGoogle().then((response) {
-															Navigator.of(context).popAndPushNamed(RegisterScreen.routeName);
+															 print(response.uid);
+															Navigator.of(context).popAndPushNamed(ProfileScreen.routeName);
 													  });
 												  } catch(e){
 										  			throw e;

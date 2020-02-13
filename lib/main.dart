@@ -56,9 +56,10 @@ class MyApp extends StatelessWidget {
 							textTheme: ButtonTextTheme.normal
 						),
 		    	),
-		    	home: AboutEventScreen(),
+		    	home: AuthScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
+						ProfileScreen.routeName: (ctx) => ProfileScreen()
 					},
 		    ),
 		  ),

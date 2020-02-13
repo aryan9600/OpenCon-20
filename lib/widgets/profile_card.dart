@@ -69,7 +69,7 @@ class ProfileCard extends StatelessWidget {
                         text: ': ',
                       ),
                       TextSpan(
-                        text: 'Sanskar Jaiswal',
+                        text: name,
                         style: TextStyle(
                           color: Color(0xff00B7D0).withOpacity(0.7)
                         )
@@ -94,7 +94,7 @@ class ProfileCard extends StatelessWidget {
                         text: ': ',
                       ),
                       TextSpan(
-                        text: 'Team Alpha',
+                        text: teamName,
                         style: TextStyle(
                           color: Color(0xff00B7D0).withOpacity(0.7)
                         )
@@ -119,7 +119,7 @@ class ProfileCard extends StatelessWidget {
                         text: ': ',
                       ),
                       TextSpan(
-                        text: 'jaiswalsanskar078@gmail.com',
+                        text: email,
                         style: TextStyle(
                           color: Color(0xff00B7D0).withOpacity(0.7)
                         )
