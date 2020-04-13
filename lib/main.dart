@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 		    return MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	home: AuthScreen(),
+		    	home: RegisterScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 						ProfileScreen.routeName: (ctx) => ProfileScreen()
