@@ -40,7 +40,6 @@ flutter:
     - assets/frame.png
     - assets/github.png
     - assets/qr.png
-    - .ENV
 
   fonts:
     - family: Blinker
