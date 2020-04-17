@@ -13,31 +13,31 @@ class SponsorCard extends StatelessWidget {
     SizeConfig().init(context);
 
     return Container(
-      child: Card(
-        color: Color(0xff232526),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*2)),
-        elevation: 20,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*3),
+      decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*10),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey[900].withOpacity(0.8),
-                blurRadius: SizeConfig.blockSizeVertical*1.7,
-                spreadRadius: SizeConfig.blockSizeHorizontal/3,
-                offset: Offset(SizeConfig.blockSizeVertical, SizeConfig.blockSizeVertical)
+                color: Colors.grey[200].withOpacity(0.8),
+                blurRadius: 20,
+                offset: Offset(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeHorizontal)
               ),
               BoxShadow(
-                color: Colors.grey[800].withOpacity(0.12),
-                blurRadius: SizeConfig.blockSizeVertical*1.7,
-                spreadRadius: SizeConfig.blockSizeHorizontal/3,
-                offset: Offset(-SizeConfig.blockSizeVertical, -SizeConfig.blockSizeVertical)
+                color: Colors.grey[200].withOpacity(0.8),
+                blurRadius: 20,
+                offset: Offset(-SizeConfig.blockSizeHorizontal, -SizeConfig.blockSizeHorizontal)
               ),
             ]
           ),
+      child: Card(
+        
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*2)),
+        // elevation: 20,
+        child: Container(
+          padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal*2),
           height: SizeConfig.blockSizeVertical*15,
           width: SizeConfig.screenWidth/4,
-          child: Image.network(logoUrl),
+          child: Image.network(logoUrl, fit: BoxFit.contain),
         ),
       ),
     );

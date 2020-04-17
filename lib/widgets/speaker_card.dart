@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:neumorphic/neumorphic.dart';
 import 'package:open_con/utils/size_config.dart';
 
 class SpeakerCard extends StatelessWidget {
@@ -17,7 +16,7 @@ class SpeakerCard extends StatelessWidget {
     SizeConfig().init(context);
     return Container(
       width: SizeConfig.screenWidth/1.4,    
-      height: SizeConfig.screenHeight/2.5,
+      height: SizeConfig.screenHeight/3,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*10),
         boxShadow: [
@@ -69,15 +68,15 @@ class SpeakerCard extends StatelessWidget {
                 color: Colors.grey[500],
                 fontSize: SizeConfig.blockSizeVertical*2
               ),),
-              Expanded(
-               child: Container(
-                  padding: EdgeInsetsDirectional.only(top: SizeConfig.blockSizeVertical),
-                  child: Text(description,textAlign: TextAlign.center, style: TextStyle(
+              Spacer(),
+              Container(
+                  padding: EdgeInsetsDirectional.only(bottom: SizeConfig.blockSizeVertical),
+                  child: Text("Know More",textAlign: TextAlign.center, style: TextStyle(
                     color: Color(0xff00B7D0),
                     fontSize: SizeConfig.blockSizeVertical*2
                   ),),
                 ),
-              )
+              
             ],
           )
         ),

@@ -45,7 +45,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                         case ConnectionState.waiting: return Text('Fetching');
                         default:
                           return Container(
-                            height: SizeConfig.screenHeight/2.5,
+                            height: SizeConfig.screenHeight/2.7,
                             child: Swiper(
                               itemCount: snapshot.data.documents.length,
                               itemBuilder: (BuildContext ctx, int index) {
@@ -57,7 +57,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                                   designation: snapshot.data.documents[index]['designation'],
                                 );
                               },
-                              viewportFraction: 0.6,
+                              viewportFraction: 0.59,
                               scale: 0.6,
                               // autoplay: true,
                               // autoplayDelay: 3000,
@@ -68,11 +68,11 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical*2),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
-                    child: Text('SPONSORS', style: TextStyle(
-                      color: Color(0xff00B7D0),
+                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*3),
+                    child: Text('Sponsors', style: TextStyle(
+                      fontFamily: 'Blinker',
                       fontWeight: FontWeight.w600,
-                      fontSize: SizeConfig.blockSizeVertical*3.6,
+                      fontSize: SizeConfig.blockSizeVertical*4,
                     )),
                   ),
                   StreamBuilder(
@@ -84,17 +84,19 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                       switch(snapshot.connectionState){
                         case ConnectionState.waiting: return Text('Fetching');
                         default:
-                          return GridView.count(
-                            padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*6),
-                            primary: false,
-                            shrinkWrap: true,
-                            crossAxisCount: 2,
-                            crossAxisSpacing: SizeConfig.blockSizeVertical*3,
-                            mainAxisSpacing: SizeConfig.blockSizeVertical*2,
-                            children: snapshot.data.documents.map((DocumentSnapshot document){
-                              return SponsorCard(document['logoUrl']);
-                            }).toList()
-                          );
+                          return Container(
+                            height: SizeConfig.blockSizeHorizontal*30,
+                            child: Swiper(
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (BuildContext ctx, int index) {
+                                return SponsorCard(snapshot.data.documents[index]['logoUrl']);
+                              },
+                              viewportFraction: 0.3,
+                              scale: 1,
+                              // autoplay: true,
+                              // autoplayDelay: 3000,
+                            ),
+                          ); 
                       }
                     },
                   ),
