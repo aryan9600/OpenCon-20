@@ -91,7 +91,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                               itemBuilder: (BuildContext ctx, int index) {
                                 return SponsorCard(snapshot.data.documents[index]['logoUrl']);
                               },
-                              viewportFraction: 0.3,
+                              viewportFraction: 0.35,
                               scale: 1,
                               // autoplay: true,
                               // autoplayDelay: 3000,
@@ -99,6 +99,34 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                           ); 
                       }
                     },
+                  ),
+                  SizedBox(height: SizeConfig.blockSizeVertical*5,),
+                  Center(
+                    child: Container(
+                      width: SizeConfig.screenWidth/1.7,
+                      height: SizeConfig.blockSizeVertical*9,
+                      child: RaisedButton(
+                        onPressed: (){},
+                        elevation: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Ask a Doubt', style: TextStyle(
+                                fontFamily: 'Blinker',
+                                color: Colors.white,
+                                fontSize: SizeConfig.blockSizeVertical*2.5
+                              ),), 
+                            SizedBox(width: SizeConfig.blockSizeVertical*2,),
+                            Icon(Icons.chat_bubble_outline, color: Colors.white,)
+                            
+                          ],
+                        ),
+                        color: Color(0xff00B7D0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*2),
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical*5,)
                 ],

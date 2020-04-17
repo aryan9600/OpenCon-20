@@ -13,17 +13,18 @@ class SponsorCard extends StatelessWidget {
     SizeConfig().init(context);
 
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*2),
       decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*10),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey[200].withOpacity(0.8),
-                blurRadius: 20,
+                color: Colors.grey[400].withOpacity(0.4),
+                blurRadius: 10,
                 offset: Offset(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeHorizontal)
               ),
               BoxShadow(
-                color: Colors.grey[200].withOpacity(0.8),
-                blurRadius: 20,
+                color: Colors.grey[400].withOpacity(0.1),
+                blurRadius: 10,
                 offset: Offset(-SizeConfig.blockSizeHorizontal, -SizeConfig.blockSizeHorizontal)
               ),
             ]

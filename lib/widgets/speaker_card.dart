@@ -15,20 +15,20 @@ class SpeakerCard extends StatelessWidget {
 
     SizeConfig().init(context);
     return Container(
-      width: SizeConfig.screenWidth/1.4,    
-      height: SizeConfig.screenHeight/3,
+      width: SizeConfig.screenWidth/1.3,    
+      height: SizeConfig.screenHeight/2.9,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[200].withOpacity(0.8),
+            color: Colors.grey[400].withOpacity(0.3),
             blurRadius: 20,
-            offset: Offset(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeHorizontal)
+            offset: Offset(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeHorizontal/2)
           ),
           BoxShadow(
-            color: Colors.grey[200].withOpacity(0.8),
-            blurRadius: 20,
-            offset: Offset(-SizeConfig.blockSizeHorizontal, -SizeConfig.blockSizeHorizontal)
+            color: Colors.grey[400].withOpacity(0.3),
+            blurRadius: 30,
+            offset: Offset(-SizeConfig.blockSizeHorizontal, -SizeConfig.blockSizeHorizontal/2)
           ),
           // BoxShadow(
           //   color: Colors.grey[300].withOpacity(0.8),
@@ -60,13 +60,17 @@ class SpeakerCard extends StatelessWidget {
               Container(
                 padding: EdgeInsetsDirectional.only(top: SizeConfig.blockSizeHorizontal*2),
                 child: Text(name, style: TextStyle(
+                  fontFamily: 'Blinker',
                   color: Colors.black,
                   fontSize: SizeConfig.blockSizeVertical*3,
+                  fontWeight: FontWeight.w600
                 ),),
               ),
               Text("$designation, $company", style: TextStyle(
                 color: Colors.grey[500],
-                fontSize: SizeConfig.blockSizeVertical*2
+                fontSize: SizeConfig.blockSizeVertical*2,
+                fontFamily: 'Blinker',
+                fontWeight: FontWeight.w600
               ),),
               Spacer(),
               Container(
