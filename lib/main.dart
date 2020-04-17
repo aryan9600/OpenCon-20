@@ -10,6 +10,8 @@ import 'package:open_con/utils/size_config.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/about_event_screen.dart';
+
 
 void main(){
 	runApp(MyApp());
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
 		    return MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	home: RegisterScreen(),
+		    	home: AboutEventScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 						ProfileScreen.routeName: (ctx) => ProfileScreen()
