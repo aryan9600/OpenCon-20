@@ -34,7 +34,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                       fontSize: SizeConfig.blockSizeVertical*4,
                     )),
                   ),
-                  SizedBox(height: SizeConfig.blockSizeVertical*3),
+                  SizedBox(height: SizeConfig.blockSizeVertical*2.5),
                   StreamBuilder(
                     stream: Firestore.instance.collection("speakers").snapshots(),
                     builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
@@ -49,12 +49,16 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                             child: Swiper(
                               itemCount: snapshot.data.documents.length,
                               itemBuilder: (BuildContext ctx, int index) {
-                                return SpeakerCard(
-                                  name: snapshot.data.documents[index]['name'],
-                                  description: snapshot.data.documents[index]['description'],
-                                  imgUrl: snapshot.data.documents[index]['imgUrl'],
-                                  company: snapshot.data.documents[index]['company'],
-                                  designation: snapshot.data.documents[index]['designation'],
+                                return Container(
+                                  padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
+                                  child: SpeakerCard(
+                                    name: snapshot.data.documents[index]['name'],
+                                    description: snapshot.data.documents[index]['description'],
+                                    imgUrl: snapshot.data.documents[index]['imgUrl'],
+                                    company: snapshot.data.documents[index]['company'],
+                                    designation: snapshot.data.documents[index]['designation'],
+                                    status: snapshot.data.documents[index]['status']
+                                  ),
                                 );
                               },
                               viewportFraction: 0.55,
@@ -89,7 +93,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                               itemCount: snapshot.data.documents.length,
                               itemBuilder: (BuildContext ctx, int index) {
                                 return Container(
-                                  padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal),
+                                  padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*3),
                                   child: SponsorCard(snapshot.data.documents[index]['logoUrl'])
                                 );
                               },

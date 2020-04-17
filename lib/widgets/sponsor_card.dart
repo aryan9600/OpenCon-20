@@ -13,13 +13,13 @@ class SponsorCard extends StatelessWidget {
     SizeConfig().init(context);
 
     return Container(
-      padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeVertical/5, SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeVertical/5),
+      // padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeVertical/5, SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeVertical/5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*4),
         boxShadow: [
           BoxShadow(
             color: Colors.grey[400].withOpacity(0.3),
-            blurRadius: 7
+            blurRadius: 7.5
           ),
         ]
       ),

@@ -40,6 +40,8 @@ flutter:
     - assets/frame.png
     - assets/github.png
     - assets/qr.png
+    - assets/speaking.png
+    - assets/not-speaking.png
 
   fonts:
     - family: Blinker
