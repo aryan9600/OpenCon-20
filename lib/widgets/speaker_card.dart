@@ -15,31 +15,16 @@ class SpeakerCard extends StatelessWidget {
 
     SizeConfig().init(context);
     return Container(
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical/4),
       width: SizeConfig.screenWidth/1.3,    
-      height: SizeConfig.screenHeight/2.9,
+      height: SizeConfig.screenHeight/4,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*10),
+        borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*5),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[400].withOpacity(0.3),
-            blurRadius: 20,
-            offset: Offset(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeHorizontal/2)
+            color: Colors.grey[400].withOpacity(0.4),
+            blurRadius: 10
           ),
-          BoxShadow(
-            color: Colors.grey[400].withOpacity(0.3),
-            blurRadius: 30,
-            offset: Offset(-SizeConfig.blockSizeHorizontal, -SizeConfig.blockSizeHorizontal/2)
-          ),
-          // BoxShadow(
-          //   color: Colors.grey[300].withOpacity(0.8),
-          //   blurRadius: SizeConfig.blockSizeHorizontal/1.5,
-          //   offset: Offset(-SizeConfig.blockSizeVertical, SizeConfig.blockSizeVertical)
-          // ),
-          // BoxShadow(
-          //   color: Colors.grey[300].withOpacity(0.8),
-          //   blurRadius: SizeConfig.blockSizeHorizontal/1.5,
-          //   offset: Offset(SizeConfig.blockSizeVertical, -SizeConfig.blockSizeVertical)
-          // ),
         ]
       ),
       child: Card(

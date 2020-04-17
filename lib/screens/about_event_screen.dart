@@ -45,7 +45,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                         case ConnectionState.waiting: return Text('Fetching');
                         default:
                           return Container(
-                            height: SizeConfig.screenHeight/2.7,
+                            height: SizeConfig.screenHeight/2.75,
                             child: Swiper(
                               itemCount: snapshot.data.documents.length,
                               itemBuilder: (BuildContext ctx, int index) {
@@ -57,7 +57,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                                   designation: snapshot.data.documents[index]['designation'],
                                 );
                               },
-                              viewportFraction: 0.59,
+                              viewportFraction: 0.55,
                               scale: 0.6,
                               // autoplay: true,
                               // autoplayDelay: 3000,
@@ -66,7 +66,6 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                       }
                     },
                   ),
-                  SizedBox(height: SizeConfig.blockSizeVertical*2),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*3),
                     child: Text('Sponsors', style: TextStyle(
@@ -89,7 +88,10 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                             child: Swiper(
                               itemCount: snapshot.data.documents.length,
                               itemBuilder: (BuildContext ctx, int index) {
-                                return SponsorCard(snapshot.data.documents[index]['logoUrl']);
+                                return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal),
+                                  child: SponsorCard(snapshot.data.documents[index]['logoUrl'])
+                                );
                               },
                               viewportFraction: 0.35,
                               scale: 1,
