@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 		    return MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	home: AboutEventScreen(),
+		    	home: TimelineScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 						ProfileScreen.routeName: (ctx) => ProfileScreen()

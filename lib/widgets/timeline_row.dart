@@ -22,8 +22,20 @@ class TimeLineRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ListTile(
-                title: Text(time, textAlign: TextAlign.end,),
-                subtitle: Text(date, textAlign: TextAlign.end,),
+                title: Text(
+                  time, 
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontFamily: 'Blinker'
+                  ),
+                ),
+                subtitle: Text(
+                  date, 
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontFamily: 'Blinker'
+                  ),
+                ),
               )
             ],
           ),
@@ -37,7 +49,7 @@ class TimeLineRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                width: SizeConfig.blockSizeHorizontal*0.8,
+                width: SizeConfig.blockSizeHorizontal*0.5,
                 height: SizeConfig.blockSizeVertical*5.5,
                 decoration: new BoxDecoration(
                   color: Color(0xff00B7D0),
@@ -47,17 +59,8 @@ class TimeLineRow extends StatelessWidget {
               ),
               SizedBox(height: SizeConfig.blockSizeVertical*2,),
               Container(
-                width: SizeConfig.blockSizeVertical*1.5,
-                height: SizeConfig.blockSizeVertical*1.5,
+                width: SizeConfig.blockSizeVertical*1.25,
                 decoration: new BoxDecoration(
-                    boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: SizeConfig.blockSizeVertical*1.2,
-                      blurRadius: SizeConfig.blockSizeHorizontal,
-                      offset: Offset(0, SizeConfig.blockSizeHorizontal), 
-                    )
-                  ],
                   color: Color(0xff00B7D0),
                   shape: BoxShape.circle,
                 ),
@@ -65,7 +68,7 @@ class TimeLineRow extends StatelessWidget {
               ),
               SizedBox(height: SizeConfig.blockSizeVertical*2,),
               Container(
-                width: SizeConfig.blockSizeHorizontal*0.8,
+                width: SizeConfig.blockSizeHorizontal*0.5,
                 height: SizeConfig.blockSizeVertical*5.5,
                 decoration: new BoxDecoration(
                   color: Color(0xff00B7D0),
