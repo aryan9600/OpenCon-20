@@ -134,7 +134,7 @@ class _HighlightNavigationBarState extends State<HighlightNavigationBar>
               left: 
               _positionController.value *
                       (SizeConfig.screenWidth - 4 * 2) +
-                  (MediaQuery.of(context).size.width - 10 * 0.75) /
+                  (SizeConfig.screenWidth - 10 * 0.75) /
                       (widget.icons.length * 3.45),
               child: child,
             ),

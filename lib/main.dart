@@ -13,8 +13,9 @@ import 'package:provider/provider.dart';
 import 'screens/about_event_screen.dart';
 
 
-void main(){
+void main() async{
 	runApp(MyApp());
+  await DotEnv().load('.env');
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
 		    return MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	home: TimelineScreen(),
+		    	home: AuthScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 						ProfileScreen.routeName: (ctx) => ProfileScreen()

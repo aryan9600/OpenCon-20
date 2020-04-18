@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:open_con/utils/helper_functions.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/nav_bar.dart';
