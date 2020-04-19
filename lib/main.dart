@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_con/backend/auth.dart';
 import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/screens/auth_screen.dart';
+import 'package:open_con/screens/chat_screen.dart';
 import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/screens/timeline_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
 		    return MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	home: AuthScreen(),
+		    	home: ChatScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 						ProfileScreen.routeName: (ctx) => ProfileScreen()
