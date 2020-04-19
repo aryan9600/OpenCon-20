@@ -14,7 +14,10 @@ class ChatMessage extends StatelessWidget {
     return <Widget>[
       new Container(
         // margin: const EdgeInsets.only(right: 10.0),
-        child: new CircleAvatar(child: new Image.asset("assets/github.png")),
+        child: new CircleAvatar(
+          backgroundColor: Color(0xff00B7D0),
+          child: new Image.asset("assets/opencon_logo.png", fit: BoxFit.fitHeight,)
+        ),
       ),
       new Expanded(
         child: new Column(
@@ -26,7 +29,7 @@ class ChatMessage extends StatelessWidget {
                 width: text.length>25?SizeConfig.screenWidth/2:null,
                 padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal),
               ),
-              margin: BubbleEdges.fromLTRB(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeVertical, 0, 0),
+              margin: BubbleEdges.fromLTRB(SizeConfig.blockSizeHorizontal, SizeConfig.blockSizeVertical*2, 0, 0),
               // padding: BubbleEdges.fromLTRB(SizeConfig.blockSizeHorizontal*4, SizeConfig.blockSizeHorizontal*4, 0, SizeConfig.blockSizeHorizontal*4,),
               color: Color(0xff414141),
               radius: Radius.circular(SizeConfig.blockSizeVertical*2),
@@ -49,7 +52,7 @@ class ChatMessage extends StatelessWidget {
           children: <Widget>[
             Bubble(
               child: Container(
-                width: text.length>20?SizeConfig.screenWidth/2:null,
+                width: text.length>25?SizeConfig.screenWidth/2:null,
                 child: Text(
                   text, 
                   style: TextStyle(fontFamily: 'Blinker', color: Colors.white), 
@@ -57,7 +60,7 @@ class ChatMessage extends StatelessWidget {
                 ),
                 padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal),
               ),
-              margin: BubbleEdges.fromLTRB(0, SizeConfig.blockSizeVertical, 0, 0),
+              margin: BubbleEdges.fromLTRB(0, SizeConfig.blockSizeVertical*2, 0, 0),
               color: Color(0xff414141),
               radius: Radius.circular(SizeConfig.blockSizeVertical*2),
               nip: BubbleNip.rightTop,
@@ -67,9 +70,13 @@ class ChatMessage extends StatelessWidget {
           ],
         ),
       ),
+  
       new Container(
-        margin: const EdgeInsets.only(left: 16.0),
-        child: new CircleAvatar(child: new Text(this.name[0])),
+        margin: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
+        child: new CircleAvatar(
+          backgroundColor: Color(0xff00B7D0),
+          child: new Text(this.name[0], style: TextStyle(color: Colors.white))
+        ),
       ),
     ];
   }
