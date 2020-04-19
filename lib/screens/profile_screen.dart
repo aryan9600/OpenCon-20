@@ -10,7 +10,6 @@ import 'package:qr/qr.dart';
 class ProfileScreen extends StatefulWidget {
 
   static const routeName = '/profile';
-
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -18,13 +17,17 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
 
   DocumentSnapshot userInfo;
+  Stream<DocumentSnapshot> profile;
+  initState(){
+    super.initState();
+    final _userUId = Provider.of<Auth>(context, listen: false).uIdToken;
+    profile = Firestore.instance.collection("users").document(_userUId).snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     SizeConfig().init(context);
-    // final _userUId = Provider.of<Auth>(context, listen: false).uIdToken;
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -41,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: PrettyQr(
                       typeNumber: 3,
                       size: SizeConfig.blockSizeVertical*25,
-                      data: 'd1KvBfhLJm5H3PjR73qX',
+                      data: Provider.of<Auth>(context, listen: false).uIdToken,
                       errorCorrectLevel: QrErrorCorrectLevel.M,
                       roundEdges: true
                     )
@@ -49,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 SizedBox(height: SizeConfig.blockSizeVertical*6,),
                 StreamBuilder<DocumentSnapshot>(
-                  stream: Firestore.instance.collection("users").document("d1KvBfhLJm5H3PjR73qX").snapshots(),
+                  stream: profile,
                   builder: (ctx, snapshot){
                     if(snapshot.hasError){
                       print('Error ${snapshot.error}');
@@ -62,13 +65,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     }
                   },
                 ),
-                //ProfileCard(name: 'Sanskar Jaiswal', teamName: 'Team Alpha', email: 'jaiswalsanskar087@gmail.com'),
+                // ProfileCard(name: 'Sanskar Jaiswal', teamName: 'Team Alpha', email: 'jaiswalsanskar087@gmail.com'),
                 SizedBox(height: SizeConfig.blockSizeVertical*6),
                 Container(
                   height: SizeConfig.blockSizeVertical*7,
                   width: SizeConfig.blockSizeHorizontal*60,
                   child: RaisedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Provider.of<Auth>(context, listen: false).signOutGoogle();
+                    },
                     child: Text('Logout', style: TextStyle(
                       color: Color(0xff00B7D0),
                       fontSize: SizeConfig.blockSizeVertical*3

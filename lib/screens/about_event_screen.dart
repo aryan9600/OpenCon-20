@@ -6,16 +6,28 @@ import 'package:open_con/widgets/speaker_card.dart';
 import 'package:open_con/widgets/sponsor_card.dart';
 
 class AboutEventScreen extends StatefulWidget {
+
+  static const routeName = '/about';
   @override
   _AboutEventScreenState createState() => _AboutEventScreenState();
 }
 
 class _AboutEventScreenState extends State<AboutEventScreen> {
+
+  Stream<QuerySnapshot> speakers;
+  Stream<QuerySnapshot> sponsors;
+
   @override
+  void initState() {
+    super.initState();
+    speakers = Firestore.instance.collection("speakers").snapshots();
+    sponsors = Firestore.instance.collection("sponsors").snapshots();
+  }
+    
+   @override
   Widget build(BuildContext context) {
-
+    
     SizeConfig().init(context);
-
     return Scaffold(
       // backgroundColor: Color(0xffE5E5E5),
       body: SafeArea(
@@ -36,7 +48,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical*2.5),
                   StreamBuilder(
-                    stream: Firestore.instance.collection("speakers").snapshots(),
+                    stream: speakers,
                     builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
                       if(snapshot.hasError){
                         print('Error ${snapshot.error}');
@@ -79,7 +91,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                     )),
                   ),
                   StreamBuilder(
-                    stream: Firestore.instance.collection("sponsors").snapshots(),
+                    stream: sponsors,
                     builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
                       if(snapshot.hasError){
                         print('Error ${snapshot.error}');

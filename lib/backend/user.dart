@@ -35,14 +35,15 @@ class User{
 
   Future<DocumentSnapshot> getUser(String token) async{
     try{
-      DocumentSnapshot user;
-      await databaseReference
+      final user = await databaseReference
         .collection("users")
         .document(token)
-        .get().then((snap){
-          user = snap;
-        });
-      return user;
+        .get();
+      if(user.exists){
+        return user;
+      } else {
+        return null;
+      }
     }catch(error){
       throw error;
     }

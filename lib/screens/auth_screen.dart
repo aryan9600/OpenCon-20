@@ -4,6 +4,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:open_con/backend/auth.dart';
+import 'package:open_con/backend/user.dart';
+import 'package:open_con/screens/about_event_screen.dart';
+import 'package:open_con/screens/home_screen.dart';
 import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/utils/size_config.dart';
@@ -22,6 +25,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
 
 	StreamSubscription _subs;
+  final user = User();
 
 	@override
   void initState() {
@@ -122,9 +126,16 @@ class _AuthScreenState extends State<AuthScreen> {
                     onPressed: () {
                       print('something');
                       try{
-                          Provider.of<Auth>(context, listen: false).signInWithGoogle().then((response) {
+                          Provider.of<Auth>(context, listen: false).signInWithGoogle().then((response) async{
                             print(response.uid);
-                          Navigator.of(context).popAndPushNamed(ProfileScreen.routeName);
+                            user.getUser(response.uid).then((supposedUser){
+                              print("user is $supposedUser");
+                              if(supposedUser!=null){
+                                Navigator.of(context).popAndPushNamed(HomeScreen.routeName);
+                              } else {
+                                Navigator.of(context).popAndPushNamed(RegisterScreen.routeName);
+                              }
+                            });
                         });
                       } catch(e){
                         throw e;
@@ -155,6 +166,32 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     onPressed: (){
                       Provider.of<Auth>(context, listen: false).onClickGitHubLoginButton();
+                    },
+                  )
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*3),
+                  width: SizeConfig.screenWidth/1.3,
+                  child: FlatButton(
+                    color: Colors.black,
+                    textColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*1.5)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*1.7, 0, SizeConfig.blockSizeVertical*1.7),
+                          child: Image.asset('assets/github.png', height: SizeConfig.blockSizeVertical*4,),
+                          width: SizeConfig.blockSizeHorizontal*13,
+                        ),
+                        Text('Sign Out', style: TextStyle(
+                          fontFamily: 'Blinker',
+                          fontSize: SizeConfig.blockSizeVertical*3
+                        ),)
+                      ],
+                    ),
+                    onPressed: (){
+                      Provider.of<Auth>(context, listen: false).signOutGoogle();
                     },
                   )
                 )

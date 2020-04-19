@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:open_con/utils/size_config.dart';
 
@@ -33,6 +34,13 @@ class SponsorCard extends StatelessWidget {
           height: SizeConfig.blockSizeVertical*15,
           width: SizeConfig.screenWidth/4,
           child: Image.network(logoUrl, fit: BoxFit.contain),
+          // CachedNetworkImage(
+          //   imageUrl: logoUrl,
+          //   progressIndicatorBuilder: (context, url, downloadProgress) => 
+          //           CircularProgressIndicator(value: downloadProgress.progress),
+          //   errorWidget: (context, url, error) => Icon(Icons.error),
+          //   fit: BoxFit.contain,
+          // ),
         ),
       ),
     );

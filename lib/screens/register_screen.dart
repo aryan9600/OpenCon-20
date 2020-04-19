@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_con/backend/auth.dart';
+import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:open_con/backend/user.dart';
@@ -43,7 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     
-    // final _user = Provider.of<Auth>(context, listen: false);
+    final _user = Provider.of<Auth>(context, listen: false);
     
     SizeConfig().init(context);
 
@@ -188,7 +189,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onPressed: (){
                             print(_teamNameController.text);
                             print('lol');
-                            // _submit(_user.uIdToken, _userNameController.text, _teamNameController.text, _user.userEmail);
+                            _submit(_user.uIdToken, _userNameController.text, _teamNameController.text, _user.userEmail);
+                            Navigator.of(context).popAndPushNamed(AboutEventScreen.routeName);
                           },
                           elevation: 100,
                           child: Text('Done', style: TextStyle(

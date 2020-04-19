@@ -6,35 +6,27 @@ import 'package:open_con/widgets/nav_bar.dart';
 import 'package:open_con/widgets/timeline_row.dart';
 
 class TimelineScreen extends StatefulWidget {
+
   @override
   _TimelineScreenState createState() => _TimelineScreenState();
 }
 
 class _TimelineScreenState extends State<TimelineScreen> {
+  
+  Stream<QuerySnapshot> events;
+  @override
+  initState(){
+    super.initState();
+    events = Firestore.instance.collection("events").snapshots();
+  }
+
   @override
   Widget build(BuildContext context) {
 
     SizeConfig().init(context);
-
     final help = HelperFunctions();
-    int x = 2;
 
     return Scaffold(
-      bottomNavigationBar: HighlightNavigationBar(
-        onchanged: (x){
-        },
-        height: SizeConfig.blockSizeVertical*9,
-        // backgroundColor: Colors.white,
-        // selectedIconColor: Color(0xff00B7D0),
-        // highLightColor: Color(0xff00B7D0),
-        // duration: Duration(milliseconds: 300),
-        icons: [
-          IconButton(icon: Icon(Icons.access_alarm), onPressed: (){}),
-          IconButton(icon: Icon(Icons.accessibility_new), onPressed: (){}),
-          IconButton(icon: Icon(Icons.add_call), onPressed: (){}),
-          IconButton(icon: Icon(Icons.satellite), onPressed: (){}),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -53,7 +45,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 ),
                 
                 StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection("events").snapshots(),
+                  stream: events,
                   builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if(snapshot.hasError){
                       print('Error ${snapshot.error}');

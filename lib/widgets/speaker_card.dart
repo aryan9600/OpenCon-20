@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:open_con/utils/size_config.dart';
 
@@ -50,6 +51,12 @@ class SpeakerCard extends StatelessWidget {
                 children: <Widget>[
                   Center(
                     child: CircleAvatar(
+                      // child: CachedNetworkImage(
+                      //   imageUrl: imgUrl,
+                      //   progressIndicatorBuilder: (context, url, downloadProgress) => 
+                      //           CircularProgressIndicator(value: downloadProgress.progress),
+                      //   errorWidget: (context, url, error) => Icon(Icons.error),
+                      // ),
                       backgroundImage: NetworkImage(imgUrl),
                       radius: SizeConfig.blockSizeVertical*8
                     ),
