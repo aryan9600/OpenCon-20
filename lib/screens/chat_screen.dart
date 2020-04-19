@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/chat_message.dart';
+import 'dart:math' as math;
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -11,30 +13,55 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   Widget _buildTextComposer() {
-    return new IconTheme(
-      data: new IconThemeData(color: Theme.of(context).accentColor),
-      child: new Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+    SizeConfig().init(context);
+    return Container(
+        // margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(
           children: <Widget>[
             new Flexible(
-              child: new TextField(
-                controller: _textController,
-                onSubmitted: _handleSubmitted,
-                decoration:
-                new InputDecoration.collapsed(hintText: "Send a message"),
+              child: Container(
+                height: SizeConfig.blockSizeVertical*12,
+                padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal*4),
+                child: new TextField(
+                  controller: _textController,
+                  onSubmitted: _handleSubmitted,
+                  decoration: InputDecoration(
+                    hintText: 'Ask me something!',
+                    hintStyle: TextStyle(
+                      fontFamily: 'Blinker',
+                      fontSize: SizeConfig.blockSizeHorizontal*4
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: SizeConfig.blockSizeVertical
+                      ),
+                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*2)
+                    )
+                  ),
+                ),
               ),
             ),
             new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: new IconButton(
-                  icon: new Icon(Icons.send),
-                  onPressed: () => _handleSubmitted(_textController.text)),
+              margin: EdgeInsets.only(right: SizeConfig.blockSizeHorizontal*2),
+              decoration: BoxDecoration(
+                color: Color(0xff00B7D0),
+                shape: BoxShape.circle
+              ),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal/1.2,0,0,SizeConfig.blockSizeHorizontal*1.5),
+                  child: Transform.rotate(
+                    angle: 150 * math.pi/ 90,
+                    child: new IconButton(
+                      icon: new Icon(Icons.send, color: Colors.white),
+                      onPressed: () => _handleSubmitted(_textController.text)),
+                  ),
+                ),
             ),
           ],
         ),
-      ),
     );
   }
 
@@ -59,6 +86,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleSubmitted(String text) {
+    if(text==""){
+      _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Please type something dumfuck')));
+      return;
+    }
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
@@ -75,6 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: _scaffoldKey,
       appBar: new AppBar(
         title: new Text("lol"),
       ),
@@ -86,9 +118,9 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (_, int index) => _messages[index],
               itemCount: _messages.length,
             )),
-        new Divider(height: 1.0),
+        // new Divider(height: 1.0),
         new Container(
-          decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+          // decoration: new BoxDecoration(color: Theme.of(context).cardColor),
           child: _buildTextComposer(),
         ),
       ]),
