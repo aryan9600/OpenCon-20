@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 		    MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	home: AuthScreen(),
+		    	home: ChatScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
 						ProfileScreen.routeName: (ctx) => ProfileScreen(),
