@@ -1,11 +1,17 @@
+import 'dart:async';
+import 'dart:typed_data';
+
+import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:chirp_flutter/chirp_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_con/backend/auth.dart';
+import 'package:open_con/backend/deliverables.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/profile_card.dart';
-import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
-import 'package:qr/qr.dart';
+
 
 class ProfileScreen extends StatefulWidget {
 
@@ -14,14 +20,81 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateMixin{
 
-  DocumentSnapshot userInfo;
+  
+  String _appKey = DotEnv().env['CHIRP_APP_KEY'];
+  String _appSecret = DotEnv().env['CHIRP_APP_SECRET'];
+  String _appConfig = DotEnv().env['CHIRP_APP_CONFIG'];
+  ChirpState _chirpState = ChirpState.not_created;
+  Uint8List _chirpData = Uint8List(0);
+
+  final _delivery = Deliverables();
+  String _userID;
   Stream<DocumentSnapshot> profile;
-  initState(){
+  
+  AnimationController _controller; 
+
+  bool _started = false; 
+  
+
+  Future<void> _initChirp() async {
+    print("$_appKey, $_appSecret");
+    await ChirpSDK.init(_appKey, _appSecret);
+  }
+
+  Future<void> _configureChirp() async {
+    await ChirpSDK.setConfig(_appConfig);
+  }
+
+  Future<void> _startAudioProcessing() async {
+    await ChirpSDK.start();
+  }
+
+  Future<void> _stopAudioProcessing() async {
+    await ChirpSDK.stop();
+  }
+
+  @override
+  void initState(){
     super.initState();
-    final _userUId = Provider.of<Auth>(context, listen: false).uIdToken;
-    profile = Firestore.instance.collection("users").document(_userUId).snapshots();
+    _userID = Provider.of<Auth>(context, listen: false).uIdToken;
+    profile = Firestore.instance.collection("users").document(_userID).snapshots();
+    _initChirp();
+    _configureChirp();
+    _controller = AnimationController(
+      vsync: this,
+      lowerBound: 0.5,
+      duration: Duration(milliseconds: 700),
+    );
+  }
+
+  @override
+  void dispose() {
+    _stopAudioProcessing();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _stopAudioProcessing();
+    } else if (state == AppLifecycleState.resumed) {
+      _startAudioProcessing();
+    }
+  }
+
+  Widget _buildContainer(double radius) {
+    return Container(
+      width: radius,
+      height: radius,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black.withOpacity(1-_controller.value)),
+        shape: BoxShape.circle,
+        color: Colors.transparent
+      ),
+    );
   }
 
   @override
@@ -35,21 +108,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: SizeConfig.blockSizeVertical*10,),
-                GestureDetector(
-                  onTap: (){
-                    print('lol');
-                  },
-                  child: Container(
-                    height: SizeConfig.blockSizeVertical*25,
-                    child: PrettyQr(
-                      typeNumber: 3,
-                      size: SizeConfig.blockSizeVertical*25,
-                      data: Provider.of<Auth>(context, listen: false).uIdToken,
-                      errorCorrectLevel: QrErrorCorrectLevel.M,
-                      roundEdges: true
-                    )
+                Container(
+                    height: SizeConfig.screenHeight/3,
+                    child: AnimatedBuilder(
+                      animation: CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
+                      builder: (context, child) {
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: <Widget>[
+                            _started ? _buildContainer(SizeConfig.blockSizeVertical*20 * _controller.value) : Container(height: 0 , width: 0),
+                            _started ? _buildContainer(SizeConfig.blockSizeHorizontal*50 * _controller.value): Container(height: 0 , width: 0),
+                            _started ? _buildContainer(SizeConfig.safeBlockHorizontal*70 * _controller.value): Container(height: 0 , width: 0),
+                            Align(
+                                child: BouncingWidget(
+                                  child: Container(
+                                    height: SizeConfig.screenHeight/8,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.lightBlueAccent,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 200),
+                                  onPressed: (){
+                                    _startAudioProcessing();
+                                    setState(() {
+                                      _started = true;
+                                    });
+                                    print('lol');
+                                    _controller.repeat();
+                                    ChirpSDK.onReceived.listen((e) {
+                                      String deliverable = new String.fromCharCodes(e.payload);
+                                      print(deliverable);
+                                      _delivery.addUserToDeliverable(_userID, deliverable);
+                                      setState(() {
+                                        _started = false;
+                                      });
+                                      _stopAudioProcessing();
+                                    });
+                                    Future.delayed(Duration(seconds: 10), (){
+                                      setState(() {
+                                        _started = false;
+                                      });
+                                    });
+                                    ChirpSDK.state.then((val){
+                                      if(val != ChirpState.stopped){
+                                        _stopAudioProcessing();
+                                      }
+                                    });
+                                  },
+                                ),
+                              
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
                 SizedBox(height: SizeConfig.blockSizeVertical*6,),
                 StreamBuilder<DocumentSnapshot>(
                   stream: profile,
@@ -73,6 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: RaisedButton(
                     onPressed: (){
                       Provider.of<Auth>(context, listen: false).signOutGoogle();
+                      Navigator.of(context).pop();
                     },
                     child: Text('Logout', style: TextStyle(
                       color: Color(0xff00B7D0),
@@ -91,6 +206,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
         )
 
       ),
+    );
+  }
+}
+
+class BouncingAnimation extends AnimatedWidget {
+  BouncingAnimation({Key key, Animation<double> animation})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+     final animation = listenable as Animation<double>;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      height: animation.value,
+      width: animation.value,
+      child: FlutterLogo(),
     );
   }
 }

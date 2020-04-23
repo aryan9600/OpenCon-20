@@ -17,7 +17,7 @@ import 'screens/about_event_screen.dart';
 
 void main() async{
 	runApp(MyApp());
-  await DotEnv().load('.env');
+  await DotEnv().load('.ENV');
 }
 
 class MyApp extends StatelessWidget {
