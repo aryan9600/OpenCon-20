@@ -83,6 +83,12 @@ class Auth with ChangeNotifier {
 		);
 		print('we got here');
 		final AuthResult user = await FirebaseAuth.instance.signInWithCredential(credential);
+    _uIdToken = user.user.uid;
+    _userEmail = user.user.email;
+    _userName = user.user.displayName;
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('uId', _uIdToken);
 		return user.user;
 	}
 	

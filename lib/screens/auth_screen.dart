@@ -53,6 +53,15 @@ class _AuthScreenState extends State<AuthScreen> {
       Provider.of<Auth>(context, listen: false).loginWithGitHub(code)
         .then((firebaseUser) {
           print("LOGGED IN AS: " + firebaseUser.displayName);
+          print(firebaseUser.uid);
+          user.getUser(firebaseUser.uid).then((supposedUser){
+            print("user is $supposedUser");
+            if(supposedUser!=null){
+              Navigator.of(context).popAndPushNamed(HomeScreen.routeName);
+            } else {
+              Navigator.of(context).popAndPushNamed(RegisterScreen.routeName);
+            }
+          });
         }).catchError((e) {
           print("LOGIN ERROR: " + e.toString());
         });
