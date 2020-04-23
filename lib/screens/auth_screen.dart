@@ -165,7 +165,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ],
                     ),
                     onPressed: (){
-                      Provider.of<Auth>(context, listen: false).onClickGitHubLoginButton();
+                      Provider.of<Auth>(context, listen: false).onClickGitHubLoginButton()
                     },
                   )
                 ),

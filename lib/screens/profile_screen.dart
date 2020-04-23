@@ -62,11 +62,10 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
     profile = Firestore.instance.collection("users").document(_userID).snapshots();
     _initChirp();
     _configureChirp();
-    _startAudioProcessing();
     _controller = AnimationController(
       vsync: this,
       lowerBound: 0.5,
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 700),
     );
   }
 
@@ -108,27 +107,31 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
           child: Center(
             child: Column(
               children: <Widget>[
-                SizedBox(height: SizeConfig.blockSizeVertical*10,),
+                SizedBox(height: SizeConfig.blockSizeVertical*5,),
                 Container(
-                    height: SizeConfig.screenHeight/3,
+                    height: SizeConfig.screenHeight/3.5,
                     child: AnimatedBuilder(
                       animation: CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
                       builder: (context, child) {
                         return Stack(
                           alignment: Alignment.center,
                           children: <Widget>[
-                            _started ? _buildContainer(SizeConfig.blockSizeVertical*20 * _controller.value) : Container(height: 0 , width: 0),
-                            _started ? _buildContainer(SizeConfig.blockSizeHorizontal*50 * _controller.value): Container(height: 0 , width: 0),
-                            _started ? _buildContainer(SizeConfig.safeBlockHorizontal*70 * _controller.value): Container(height: 0 , width: 0),
+                            _started ? _buildContainer(SizeConfig.blockSizeVertical*25 * _controller.value) : Container(height: 0 , width: 0),
+                            _started ? _buildContainer(SizeConfig.blockSizeHorizontal*55 * _controller.value): Container(height: 0 , width: 0),
+                            _started ? _buildContainer(SizeConfig.safeBlockHorizontal*75 * _controller.value): Container(height: 0 , width: 0),
                             Align(
-                                child: BouncingWidget(
-                                  child: Container(
-                                    height: SizeConfig.screenHeight/8,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.lightBlueAccent,
-                                    ),
+                              child: BouncingWidget(
+                                child: Container(
+                                  height: SizeConfig.screenHeight/6,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xff00B7D0),
                                   ),
+                                    child: Center(child: Text('Me Hungy!', style: TextStyle(
+                                      fontFamily: 'Blinker',
+                                      fontSize: SizeConfig.blockSizeVertical*3
+                                    ),))
+                                ),
                                   duration: Duration(milliseconds: 200),
                                   onPressed: (){
                                     setState(() {
@@ -136,6 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                                     });
                                     print('lol');
                                     _controller.repeat();
+                                    _startAudioProcessing();
                                     ChirpSDK.onReceived.listen((e) {
                                       String deliverable = new String.fromCharCodes(e.payload);
                                       print(deliverable);
@@ -143,22 +147,29 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                                       setState(() {
                                         _started = false;
                                       });
+                                      _stopAudioProcessing();
                                     });
                                     Future.delayed(Duration(seconds: 10), (){
                                       setState(() {
                                         _started = false;
                                       });
                                     });
+                                    ChirpSDK.state.then((state){
+                                      if(state == ChirpState.stopped){
+                                        _stopAudioProcessing();
+                                      } else {
+                                        return;
+                                      }
+                                    });
                                   },
                                 ),
-                              
                             ),
                           ],
                         );
                       },
                     ),
                   ),
-                SizedBox(height: SizeConfig.blockSizeVertical*6,),
+                SizedBox(height: SizeConfig.blockSizeVertical*5,),
                 StreamBuilder<DocumentSnapshot>(
                   stream: profile,
                   builder: (ctx, snapshot){
@@ -199,22 +210,6 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
         )
 
       ),
-    );
-  }
-}
-
-class BouncingAnimation extends AnimatedWidget {
-  BouncingAnimation({Key key, Animation<double> animation})
-      : super(key: key, listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-     final animation = listenable as Animation<double>;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: animation.value,
-      width: animation.value,
-      child: FlutterLogo(),
     );
   }
 }
