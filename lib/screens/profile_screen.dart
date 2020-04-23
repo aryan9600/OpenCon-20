@@ -62,11 +62,10 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
     profile = Firestore.instance.collection("users").document(_userID).snapshots();
     _initChirp();
     _configureChirp();
-    _startAudioProcessing();
     _controller = AnimationController(
       vsync: this,
       lowerBound: 0.5,
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 700),
     );
   }
 
@@ -131,6 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                                   ),
                                   duration: Duration(milliseconds: 200),
                                   onPressed: (){
+                                    _startAudioProcessing();
                                     setState(() {
                                       _started = true;
                                     });
@@ -143,11 +143,17 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                                       setState(() {
                                         _started = false;
                                       });
+                                      _stopAudioProcessing();
                                     });
                                     Future.delayed(Duration(seconds: 10), (){
                                       setState(() {
                                         _started = false;
                                       });
+                                    });
+                                    ChirpSDK.state.then((val){
+                                      if(val != ChirpState.stopped){
+                                        _stopAudioProcessing();
+                                      }
                                     });
                                   },
                                 ),
@@ -181,6 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                   child: RaisedButton(
                     onPressed: (){
                       Provider.of<Auth>(context, listen: false).signOutGoogle();
+                      Navigator.of(context).pop();
                     },
                     child: Text('Logout', style: TextStyle(
                       color: Color(0xff00B7D0),
