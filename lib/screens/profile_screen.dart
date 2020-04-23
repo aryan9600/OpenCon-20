@@ -12,6 +12,8 @@ import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/profile_card.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/size_config.dart';
+
 
 class ProfileScreen extends StatefulWidget {
 
@@ -107,9 +109,9 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
           child: Center(
             child: Column(
               children: <Widget>[
-                SizedBox(height: SizeConfig.blockSizeVertical*10,),
+                SizedBox(height: SizeConfig.blockSizeVertical*5,),
                 Container(
-                    height: SizeConfig.screenHeight/3,
+                    height: SizeConfig.screenHeight/3.25,
                     child: AnimatedBuilder(
                       animation: CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
                       builder: (context, child) {
@@ -122,10 +124,16 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                             Align(
                                 child: BouncingWidget(
                                   child: Container(
-                                    height: SizeConfig.screenHeight/8,
+                                    height: SizeConfig.screenHeight/5,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.lightBlueAccent,
+                                    ),
+                                    child: Center(
+                                      child: Text("Me Hungy!", style: TextStyle(
+                                        fontFamily: 'Blinker',
+                                        fontSize: SizeConfig.blockSizeVertical*3.5
+                                      ),),
                                     ),
                                   ),
                                   duration: Duration(milliseconds: 200),
@@ -164,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                       },
                     ),
                   ),
-                SizedBox(height: SizeConfig.blockSizeVertical*6,),
+                SizedBox(height: SizeConfig.blockSizeVertical*5,),
                 StreamBuilder<DocumentSnapshot>(
                   stream: profile,
                   builder: (ctx, snapshot){
@@ -204,7 +212,6 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
             ),
           ),
         )
-
       ),
     );
   }

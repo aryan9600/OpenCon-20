@@ -3,9 +3,9 @@ import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:open_con/backend/auth.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/chat_message.dart';
+import 'package:open_con/widgets/slide_transition.dart';
 import 'dart:math' as math;
 
-import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -19,17 +19,11 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String userName = '';
 
-  AnimationController _controller;
-  Duration _duration = Duration(milliseconds: 500);
-  Tween<Offset> _tween = Tween(begin: Offset(0, 1), end: Offset(0, 0));
-
-
   @override
   initState(){
     super.initState();
     // final user = Provider.of<Auth>(context, listen: false);
     // userName = user.userName; 
-     _controller = AnimationController(vsync: this, duration: _duration);
   }
 
   Widget _buildTextComposer() {
@@ -218,23 +212,24 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
-          leading: Container(
-            padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal*3.5, SizeConfig.blockSizeVertical*2, 0, 0),
-            child: Text('< Back', style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Blinker',
-              fontSize: SizeConfig.blockSizeVertical*2.5,
-              fontWeight: FontWeight.w600
-            ),),
+          leading: GestureDetector(
+            onTap: (){
+              Navigator.pop(context, SlideRightRoute);
+            },
+            child: Container(
+              padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal*3.5, SizeConfig.blockSizeVertical*2, 0, 0),
+              child: Text('< Back', style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Blinker',
+                fontSize: SizeConfig.blockSizeVertical*2.5,
+                fontWeight: FontWeight.w600
+              ),),
+            ),
           ),
           actions: <Widget>[
             GestureDetector(
               onTap: () {
                 _showSheet();
-                // if (_controller.isDismissed)
-                //   _controller.forward();
-                // else if (_controller.isCompleted)
-                //   _controller.reverse();
               },
               child: Container(
                 padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*2, SizeConfig.blockSizeHorizontal*4, 0),

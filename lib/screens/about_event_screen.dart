@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:open_con/screens/chat_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/speaker_card.dart';
 import 'package:open_con/widgets/sponsor_card.dart';
@@ -124,7 +126,10 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                       width: SizeConfig.screenWidth/1.7,
                       height: SizeConfig.blockSizeVertical*9,
                       child: RaisedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(
+                            context, CupertinoPageRoute(builder: (context) => ChatScreen()));
+                        },
                         elevation: 100,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

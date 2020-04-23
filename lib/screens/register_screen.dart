@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:open_con/backend/user.dart';
 
 import '../utils/size_config.dart';
+import 'home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
 
@@ -182,15 +183,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           enabled: true,
                           controller: _teamNameController,
                         ),
-
                         SizedBox(height: SizeConfig.blockSizeVertical*5,),
-
                         RaisedButton(
                           onPressed: (){
                             print(_teamNameController.text);
                             print('lol');
                             _submit(_user.uIdToken, _userNameController.text, _teamNameController.text, _user.userEmail);
-                            Navigator.of(context).popAndPushNamed(AboutEventScreen.routeName);
+                            Navigator.of(context).popAndPushNamed(HomeScreen.routeName);
                           },
                           elevation: 100,
                           child: Text('Done', style: TextStyle(
