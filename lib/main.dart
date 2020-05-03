@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_con/backend/auth.dart';
 import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/screens/auth_screen.dart';
+import 'package:open_con/screens/chat_screen.dart';
+import 'package:open_con/screens/home_screen.dart';
 import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/screens/timeline_screen.dart';
@@ -10,11 +12,12 @@ import 'package:open_con/utils/size_config.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/about_event_screen.dart';
 
-void main() async {
-  await DotEnv().load('.ENV');
-	 Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.microphone,]);
+
+void main() async{
 	runApp(MyApp());
+  await DotEnv().load('.ENV');
 }
 
 class MyApp extends StatelessWidget {
@@ -29,39 +32,15 @@ class MyApp extends StatelessWidget {
 		    MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	theme: ThemeData(
-						brightness: Brightness.dark,
-						canvasColor: Color(0xff232526),
-						accentColor: Color(0xff00B7D0),
-						fontFamily: "Blinker",
-						primaryTextTheme: TextTheme(
-							headline: TextStyle(
-								color: Color(0xff00B7D0),
-								fontWeight: FontWeight.bold,
-							),
-							title: TextStyle(
-								color: Colors.white,
-								fontWeight: FontWeight.w400,
-							),
-							subtitle: TextStyle(
-								color: Color.fromRGBO(255, 255, 255, 0.5),
-							),
-						),
-						buttonTheme: ButtonThemeData(
-							buttonColor: Color(0xff00B7D0),
-							shape: RoundedRectangleBorder(
-								borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical),
-							),
-							padding: EdgeInsets.fromLTRB( 23,  1.5,  23,  1.8),
-							textTheme: ButtonTextTheme.normal
-						),
-		    	),
 		    	home: AuthScreen(),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
-						ProfileScreen.routeName: (ctx) => ProfileScreen()
+						ProfileScreen.routeName: (ctx) => ProfileScreen(),
+            AboutEventScreen.routeName: (ctx) => AboutEventScreen(),
+            HomeScreen.routeName: (ctx) => HomeScreen(),
+            AuthScreen.routeName: (ctx) => AuthScreen()
 					},
-		    ),
+		    )
 		  ),
 		);
 	}

@@ -1,127 +1,161 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:open_con/screens/chat_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/speaker_card.dart';
 import 'package:open_con/widgets/sponsor_card.dart';
 
 class AboutEventScreen extends StatefulWidget {
+
+  static const routeName = '/about';
   @override
   _AboutEventScreenState createState() => _AboutEventScreenState();
 }
 
 class _AboutEventScreenState extends State<AboutEventScreen> {
+
+  Stream<QuerySnapshot> speakers;
+  Stream<QuerySnapshot> sponsors;
+
   @override
+  void initState() {
+    super.initState();
+    speakers = Firestore.instance.collection("speakers").snapshots();
+    sponsors = Firestore.instance.collection("sponsors").snapshots();
+  }
+    
+   @override
   Widget build(BuildContext context) {
-
+    
     SizeConfig().init(context);
-
     return Scaffold(
+      // backgroundColor: Color(0xffE5E5E5),
       body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Theme.of(context).canvasColor,
-            ),
-            SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                   
-                    SizedBox(height: SizeConfig.blockSizeVertical*3),
-                    Text('ABOUT OPENCON', style: TextStyle(
-                      color: Color(0xff00B7D0),
+        child: 
+          SingleChildScrollView(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*5),
+                    child: Text('Speakers', style: TextStyle(
+                      fontFamily: 'Blinker',
                       fontWeight: FontWeight.w600,
-                      fontSize: SizeConfig.blockSizeVertical*3.6,
+                      fontSize: SizeConfig.blockSizeVertical*4,
                     )),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal*7, SizeConfig.blockSizeVertical*3, 0, SizeConfig.blockSizeVertical*4),
-                      width: SizeConfig.screenWidth/1.1,
-                      child: Text("/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris, suspendisse sed elementum ultricies eleifend amet ultrices dui. Leo, sem elementum ultrices */", style: TextStyle(
-                        fontSize: SizeConfig.blockSizeVertical*2.5,
-                        color: Colors.white,
-                        fontFamily: 'Blinker',
-                        fontWeight: FontWeight.w500
-                      ),),
-                    ),
-                    Text('SPEAKERS', style: TextStyle(
-                      color: Color(0xff00B7D0),
-                      fontWeight: FontWeight.w600,
-                      fontSize: SizeConfig.blockSizeVertical*3.6,
-                    )),
-                    SizedBox(height: SizeConfig.blockSizeVertical*2.5),
-                    StreamBuilder(
-                      stream: Firestore.instance.collection("speakers").snapshots(),
-                      builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
-                        if(snapshot.hasError){
-                          print('Error ${snapshot.error}');
-                        }
-                        switch(snapshot.connectionState){
-                          case ConnectionState.waiting: return Text('Fetching');
-                          default:
-                            return Container(
-                              height: SizeConfig.screenHeight/2.5,
-                              child: Swiper(
-                                itemCount: snapshot.data.documents.length,
-                                itemBuilder: (BuildContext ctx, int index) {
-                                  return SpeakerCard(
+                  ),
+                  SizedBox(height: SizeConfig.blockSizeVertical*2.5),
+                  StreamBuilder(
+                    stream: speakers,
+                    builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
+                      if(snapshot.hasError){
+                        print('Error ${snapshot.error}');
+                      }
+                      switch(snapshot.connectionState){
+                        case ConnectionState.waiting: return Text('Fetching');
+                        default:
+                          return Container(
+                            height: SizeConfig.screenHeight/2.75,
+                            child: Swiper(
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (BuildContext ctx, int index) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
+                                  child: SpeakerCard(
                                     name: snapshot.data.documents[index]['name'],
                                     description: snapshot.data.documents[index]['description'],
                                     imgUrl: snapshot.data.documents[index]['imgUrl'],
                                     company: snapshot.data.documents[index]['company'],
                                     designation: snapshot.data.documents[index]['designation'],
-                                  );
-                                },
-                                viewportFraction: 0.69,
-                                scale: 0.7,
-                                // autoplay: true,
-                                // autoplayDelay: 3000,
-                              ),
-                            ); 
-                        }
-                      },
-                    ),
-                    SizedBox(height: SizeConfig.blockSizeVertical*2),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
-                      child: Text('SPONSORS', style: TextStyle(
+                                    status: snapshot.data.documents[index]['status']
+                                  ),
+                                );
+                              },
+                              viewportFraction: 0.55,
+                              scale: 0.6,
+                              // autoplay: true,
+                              // autoplayDelay: 3000,
+                            ),
+                          ); 
+                      }
+                    },
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*3),
+                    child: Text('Sponsors', style: TextStyle(
+                      fontFamily: 'Blinker',
+                      fontWeight: FontWeight.w600,
+                      fontSize: SizeConfig.blockSizeVertical*4,
+                    )),
+                  ),
+                  StreamBuilder(
+                    stream: sponsors,
+                    builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
+                      if(snapshot.hasError){
+                        print('Error ${snapshot.error}');
+                      }
+                      switch(snapshot.connectionState){
+                        case ConnectionState.waiting: return Text('Fetching');
+                        default:
+                          return Container(
+                            height: SizeConfig.blockSizeHorizontal*30,
+                            child: Swiper(
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (BuildContext ctx, int index) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*3),
+                                  child: SponsorCard(snapshot.data.documents[index]['logoUrl'])
+                                );
+                              },
+                              viewportFraction: 0.35,
+                              scale: 1,
+                              // autoplay: true,
+                              // autoplayDelay: 3000,
+                            ),
+                          ); 
+                      }
+                    },
+                  ),
+                  SizedBox(height: SizeConfig.blockSizeVertical*5,),
+                  Center(
+                    child: Container(
+                      width: SizeConfig.screenWidth/1.7,
+                      height: SizeConfig.blockSizeVertical*9,
+                      child: RaisedButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context, CupertinoPageRoute(builder: (context) => ChatScreen()));
+                        },
+                        elevation: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Ask a Doubt', style: TextStyle(
+                                fontFamily: 'Blinker',
+                                color: Colors.white,
+                                fontSize: SizeConfig.blockSizeVertical*2.5
+                              ),), 
+                            SizedBox(width: SizeConfig.blockSizeVertical*2,),
+                            Icon(Icons.chat_bubble_outline, color: Colors.white,)
+                            
+                          ],
+                        ),
                         color: Color(0xff00B7D0),
-                        fontWeight: FontWeight.w600,
-                        fontSize: SizeConfig.blockSizeVertical*3.6,
-                      )),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*2),
+                        ),
+                      ),
                     ),
-                    StreamBuilder(
-                      stream: Firestore.instance.collection("sponsors").snapshots(),
-                      builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot){
-                        if(snapshot.hasError){
-                          print('Error ${snapshot.error}');
-                        }
-                        switch(snapshot.connectionState){
-                          case ConnectionState.waiting: return Text('Fetching');
-                          default:
-                            return GridView.count(
-                              padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*6),
-                              primary: false,
-                              shrinkWrap: true,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: SizeConfig.blockSizeVertical*3,
-                              mainAxisSpacing: SizeConfig.blockSizeVertical*2,
-                              children: snapshot.data.documents.map((DocumentSnapshot document){
-                                return SponsorCard(document['logoUrl']);
-                              }).toList()
-                            );
-                        }
-                      },
-                    ),
-                    SizedBox(height: SizeConfig.blockSizeVertical*5,)
-                  ],
-                ),
+                  ),
+                  SizedBox(height: SizeConfig.blockSizeVertical*5,)
+                ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
       ),
     );
   }

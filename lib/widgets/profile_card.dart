@@ -3,7 +3,6 @@ import 'package:open_con/utils/size_config.dart';
 
 class ProfileCard extends StatelessWidget {
 
-
   String name;
   String teamName;
   String email;
@@ -22,21 +21,13 @@ class ProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*3),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[900].withOpacity(0.8),
-            blurRadius: SizeConfig.blockSizeVertical*1.7,
-            spreadRadius: SizeConfig.blockSizeHorizontal/3,
-            offset: Offset(SizeConfig.blockSizeVertical, SizeConfig.blockSizeVertical)
-          ),
-          BoxShadow(
-            color: Colors.grey[800].withOpacity(0.12),
-            blurRadius: SizeConfig.blockSizeVertical*1.7,
-            spreadRadius: SizeConfig.blockSizeHorizontal/3,
-            offset: Offset(-SizeConfig.blockSizeVertical, -SizeConfig.blockSizeVertical)
+            color: Colors.grey[400].withOpacity(0.4),
+            blurRadius: 7.5
           ),
         ]
       ),
       child: Card(
-        color: Color(0xff232526),
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*3)
         ),
@@ -64,9 +55,11 @@ class ProfileCard extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: 'Name ',
+                        style: TextStyle(color: Colors.black)
                       ),
                       TextSpan(
                         text: ': ',
+                        style: TextStyle(color: Colors.black)
                       ),
                       TextSpan(
                         text: name,
@@ -89,9 +82,11 @@ class ProfileCard extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: 'Team Name ',
+                        style: TextStyle(color: Colors.black)
                       ),
                       TextSpan(
                         text: ': ',
+                        style: TextStyle(color: Colors.black)
                       ),
                       TextSpan(
                         text: teamName,
@@ -114,9 +109,11 @@ class ProfileCard extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: 'Email ',
+                        style: TextStyle(color: Colors.black)
                       ),
                       TextSpan(
                         text: ': ',
+                        style: TextStyle(color: Colors.black)
                       ),
                       TextSpan(
                         text: email,

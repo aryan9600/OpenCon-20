@@ -6,17 +6,16 @@ class Deliverables{
   final databaseReference = Firestore.instance;
   final user = User();
 
-  Future<String> addUserToDeliverable(String token, String deliverable) async{
+  Future<String> addUserToDeliverable(String token, String deliverable, String email) async{
     try{
       await databaseReference
-        .collection("deliverables")
-        .document(deliverable)
-        .setData(
-          {"user" : token}
-        );
+        .collection(deliverable)
+        .document(token).
+        setData({
+          "email": email
+        });
     }catch(error){
       throw error;
     }
   }
-
 }
