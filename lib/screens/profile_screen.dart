@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_con/backend/auth.dart';
 import 'package:open_con/backend/deliverables.dart';
+import 'package:open_con/screens/auth_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/profile_card.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
   Uint8List _chirpData = Uint8List(0);
 
   final _delivery = Deliverables();
-  String _userID;
+  Auth _user;
   Stream<DocumentSnapshot> profile;
   
   AnimationController _controller; 
@@ -50,6 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
   }
 
   Future<void> _startAudioProcessing() async {
+    print('started this shit');
     await ChirpSDK.start();
   }
 
@@ -60,10 +62,12 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
   @override
   void initState(){
     super.initState();
-    _userID = Provider.of<Auth>(context, listen: false).uIdToken;
-    profile = Firestore.instance.collection("users").document(_userID).snapshots();
+    _user = Provider.of<Auth>(context, listen: false);
+    profile = Firestore.instance.collection("users").document(_user.uIdToken).snapshots();
     _initChirp();
     _configureChirp();
+    _startAudioProcessing();
+
     _controller = AnimationController(
       vsync: this,
       lowerBound: 0.5,
@@ -110,6 +114,21 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
             child: Column(
               children: <Widget>[
                 SizedBox(height: SizeConfig.blockSizeVertical*5,),
+
+                // GestureDetector(
+                //       onTap: (){
+                //         print('lol');
+                //         ChirpSDK.onReceived.listen((e) {
+                //           String deliverable = new String.fromCharCodes(e.payload);
+                //           print(deliverable);
+                //           // _delivery.addUserToDeliverable(_userUId, deliverable);
+                //         });
+                //       },
+                //       child: Container(
+                //         height: SizeConfig.blockSizeVertical*25,
+                //         child: Text('Recieve plps'),
+                //       ),
+                //     ),
                 Container(
                     height: SizeConfig.screenHeight/3.25,
                     child: AnimatedBuilder(
@@ -138,31 +157,34 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                                   ),
                                   duration: Duration(milliseconds: 200),
                                   onPressed: (){
-                                    _startAudioProcessing();
                                     setState(() {
                                       _started = true;
                                     });
+                                    ChirpSDK.state.then((val){
+                                      print(val);
+                                    });
                                     print('lol');
-                                    _controller.repeat();
                                     ChirpSDK.onReceived.listen((e) {
                                       String deliverable = new String.fromCharCodes(e.payload);
                                       print(deliverable);
-                                      _delivery.addUserToDeliverable(_userID, deliverable);
+                                      _delivery.addUserToDeliverable(_user.uIdToken, deliverable, _user.userEmail);
                                       setState(() {
                                         _started = false;
                                       });
-                                      _stopAudioProcessing();
+                                      // _stopAudioProcessing();
                                     });
+                                    _controller.repeat();
+                                    
                                     Future.delayed(Duration(seconds: 10), (){
                                       setState(() {
                                         _started = false;
                                       });
                                     });
-                                    ChirpSDK.state.then((val){
-                                      if(val != ChirpState.stopped){
-                                        _stopAudioProcessing();
-                                      }
-                                    });
+                                    // ChirpSDK.state.then((val){
+                                    //   if(val != ChirpState.stopped){
+                                    //     _stopAudioProcessing();
+                                    //   }
+                                    // });
                                   },
                                 ),
                               
@@ -195,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                   child: RaisedButton(
                     onPressed: (){
                       Provider.of<Auth>(context, listen: false).signOutGoogle();
-                      Navigator.of(context).pop();
+                      Navigator.of(context).popAndPushNamed(AuthScreen.routeName);
                     },
                     child: Text('Logout', style: TextStyle(
                       color: Color(0xff00B7D0),

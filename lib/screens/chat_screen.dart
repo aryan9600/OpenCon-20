@@ -176,13 +176,13 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                     } else {
                      return ListTile(
                        contentPadding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*8),
-                        title: Text('Potty khalo mera gand se', style: TextStyle(
+                        title: Text('OpenCon app question pls', style: TextStyle(
                           fontFamily: 'Blinker',
                           fontSize: SizeConfig.blockSizeVertical*3,
                           fontWeight: FontWeight.w400,
                           color: Color(0xff00B7D0)
                         ),),
-                        subtitle: Text('Yes so yummy feed me more, i want potty in my mouyth.', style: TextStyle(
+                        subtitle: Text('Some generic answer hopefully long enough to fill the space', style: TextStyle(
                           fontFamily: 'Blinker',
                           fontSize: SizeConfig.blockSizeVertical*2,
                           fontWeight: FontWeight.w300,

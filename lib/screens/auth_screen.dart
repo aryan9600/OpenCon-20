@@ -18,6 +18,8 @@ import '../utils/size_config.dart';
 
 
 class AuthScreen extends StatefulWidget {
+    static const routeName = '/auth';
+
 	@override
 	_AuthScreenState createState() => _AuthScreenState();
 }
@@ -178,32 +180,32 @@ class _AuthScreenState extends State<AuthScreen> {
                     },
                   )
                 ),
-                Container(
-                  padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*3),
-                  width: SizeConfig.screenWidth/1.3,
-                  child: FlatButton(
-                    color: Colors.black,
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*1.5)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*1.7, 0, SizeConfig.blockSizeVertical*1.7),
-                          child: Image.asset('assets/github.png', height: SizeConfig.blockSizeVertical*4,),
-                          width: SizeConfig.blockSizeHorizontal*13,
-                        ),
-                        Text('Sign Out', style: TextStyle(
-                          fontFamily: 'Blinker',
-                          fontSize: SizeConfig.blockSizeVertical*3
-                        ),)
-                      ],
-                    ),
-                    onPressed: (){
-                      Provider.of<Auth>(context, listen: false).signOutGoogle();
-                    },
-                  )
-                )
+                // Container(
+                //   padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*3),
+                //   width: SizeConfig.screenWidth/1.3,
+                //   child: FlatButton(
+                //     color: Colors.black,
+                //     textColor: Colors.white,
+                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*1.5)),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //       children: <Widget>[
+                //         Container(
+                //           padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*1.7, 0, SizeConfig.blockSizeVertical*1.7),
+                //           child: Image.asset('assets/github.png', height: SizeConfig.blockSizeVertical*4,),
+                //           width: SizeConfig.blockSizeHorizontal*13,
+                //         ),
+                //         Text('Sign Out', style: TextStyle(
+                //           fontFamily: 'Blinker',
+                //           fontSize: SizeConfig.blockSizeVertical*3
+                //         ),)
+                //       ],
+                //     ),
+                //     onPressed: (){
+                //       Provider.of<Auth>(context, listen: false).signOutGoogle();
+                //     },
+                //   )
+                // )
               ]
             ),
           ),

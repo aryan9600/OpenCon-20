@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
 						ProfileScreen.routeName: (ctx) => ProfileScreen(),
             AboutEventScreen.routeName: (ctx) => AboutEventScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
+            AuthScreen.routeName: (ctx) => AuthScreen()
 					},
 		    )
 		  ),
