@@ -114,21 +114,20 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
             child: Column(
               children: <Widget>[
                 SizedBox(height: SizeConfig.blockSizeVertical*5,),
-
-                // GestureDetector(
-                //       onTap: (){
-                //         print('lol');
-                //         ChirpSDK.onReceived.listen((e) {
-                //           String deliverable = new String.fromCharCodes(e.payload);
-                //           print(deliverable);
-                //           // _delivery.addUserToDeliverable(_userUId, deliverable);
-                //         });
-                //       },
-                //       child: Container(
-                //         height: SizeConfig.blockSizeVertical*25,
-                //         child: Text('Recieve plps'),
-                //       ),
-                //     ),
+                StreamBuilder<DocumentSnapshot>(
+                  stream: profile,
+                  builder: (ctx, snapshot){
+                    if(snapshot.hasError){
+                      print('Error ${snapshot.error}');
+                    }
+                    switch(snapshot.connectionState){
+                      case ConnectionState.waiting: return Text('Fetching');
+                      default:
+                        print(snapshot.data['name']);
+                        return ProfileCard(name: snapshot.data['name'], teamName: snapshot.data['teamName'], email: snapshot.data['email']);
+                    }
+                  },
+                ),
                 Container(
                     height: SizeConfig.screenHeight/3.25,
                     child: AnimatedBuilder(
@@ -195,20 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                     ),
                   ),
                 SizedBox(height: SizeConfig.blockSizeVertical*5,),
-                StreamBuilder<DocumentSnapshot>(
-                  stream: profile,
-                  builder: (ctx, snapshot){
-                    if(snapshot.hasError){
-                      print('Error ${snapshot.error}');
-                    }
-                    switch(snapshot.connectionState){
-                      case ConnectionState.waiting: return Text('Fetching');
-                      default:
-                        print(snapshot.data['name']);
-                        return ProfileCard(name: snapshot.data['name'], teamName: snapshot.data['teamName'], email: snapshot.data['email']);
-                    }
-                  },
-                ),
+                
                 // ProfileCard(name: 'Sanskar Jaiswal', teamName: 'Team Alpha', email: 'jaiswalsanskar087@gmail.com'),
                 SizedBox(height: SizeConfig.blockSizeVertical*6),
                 Container(

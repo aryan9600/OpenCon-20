@@ -18,7 +18,7 @@ class ProfileCard extends StatelessWidget {
       width: SizeConfig.screenWidth/1.2,    
       height: SizeConfig.screenHeight/4,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*3),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.grey[400].withOpacity(0.4),

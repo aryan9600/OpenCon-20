@@ -27,7 +27,8 @@ dependencies:
   flutter_tts: ^1.0.0
   bubble: ^1.1.9+1
   bouncing_widget: ^1.2.0
-
+  slider_button: ^0.5.0
+  
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
