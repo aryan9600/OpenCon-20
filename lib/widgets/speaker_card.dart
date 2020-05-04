@@ -23,8 +23,10 @@ class SpeakerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*5),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[400].withOpacity(0.4),
-            blurRadius: 7.5
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: Offset(2, 2)
+
           ),
         ]
       ),

@@ -91,7 +91,7 @@ class _AuthScreenState extends State<AuthScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: SizeConfig.screenHeight/8),
+                SizedBox(height: SizeConfig.screenHeight/10),
                 Center(
                   child: Text('Welcome to', style: TextStyle(
                     fontFamily: 'Blinker',
@@ -106,32 +106,35 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 // OpenCon Logo
                 Container(
-                  padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*40),
+                  padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*45),
                   width: SizeConfig.blockSizeHorizontal*70,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/frame.png')
+                      image: AssetImage('assets/ink-shape.png')
                     )
                   ),
                 ),
                 Container(
-                  width: SizeConfig.screenWidth/1.3,
+                  width: 275,
                   child: FlatButton(
                     color: Colors.black,
                     textColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*1.5)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal*2),
                           child: Image.asset('assets/google_logo.png'),
-                          width: SizeConfig.blockSizeHorizontal*13,
+                          width: SizeConfig.blockSizeHorizontal*12,
                         ),
-                        Text('Continue with Google', style: TextStyle(
-                          fontFamily: 'Blinker',
-                          fontSize: SizeConfig.blockSizeVertical*3
-                        ),)
+                        Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Text('Continue with Google', style: TextStyle(
+                            fontFamily: 'Blinker',
+                            fontSize: 20
+                          ),),
+                        )
                       ],
                     ),
                     onPressed: () {
@@ -156,23 +159,26 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 Container(
                   padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*3),
-                  width: SizeConfig.screenWidth/1.3,
+                  width: 275,
                   child: FlatButton(
                     color: Colors.black,
                     textColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*1.5)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*1.7, 0, SizeConfig.blockSizeVertical*1.7),
-                          child: Image.asset('assets/github.png', height: SizeConfig.blockSizeVertical*4,),
-                          width: SizeConfig.blockSizeHorizontal*13,
+                          padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal*2.5),
+                          child: Image.asset('assets/github.png'),
+                          width: SizeConfig.blockSizeHorizontal*12,
                         ),
-                        Text('Continue with GitHub', style: TextStyle(
-                          fontFamily: 'Blinker',
-                          fontSize: SizeConfig.blockSizeVertical*3
-                        ),)
+                        Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Text('Continue with GitHub', style: TextStyle(
+                            fontFamily: 'Blinker',
+                            fontSize: 20
+                          ),),
+                        )
                       ],
                     ),
                     onPressed: (){

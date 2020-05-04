@@ -40,12 +40,12 @@ class _TimelineScreenState extends State<TimelineScreen> {
               isScrollable: true,
               unselectedLabelStyle: TextStyle(
                   fontFamily: "Blinker",
-                  fontSize: SizeConfig.blockSizeVertical*4,
+                  fontSize: 24,
                 ),
-              unselectedLabelColor: Colors.grey,
+              unselectedLabelColor: Colors.black,
               labelStyle: TextStyle(
                   fontFamily: "Blinker",
-                  fontSize: SizeConfig.blockSizeVertical*6,
+                  fontSize: 40,
                 ),
               labelColor: Color(0xff00B7D0),
               tabs: <Widget>[

@@ -20,11 +20,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // keys for the form and the scaffold
 	final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 	final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
-
-  final _teamNameController = TextEditingController();
-  final _userNameController = TextEditingController();
-
+  static String person;
+  TextEditingController userNameController;
+  TextEditingController teamNameController;
+  
    
   void _submit(token, name, team, email) async{
     if(!_formKey.currentState.validate()){
@@ -41,6 +40,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  @override
+  void initState() {
+    person = Provider.of<Auth>(context, listen: false).userName;
+    teamNameController = TextEditingController();
+    userNameController = TextEditingController(text: person);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +67,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: SizeConfig.blockSizeVertical*5),
                 Text('Please enter the required details.', style: TextStyle(
                   fontFamily: 'Blinker',
-                  fontSize: SizeConfig.blockSizeVertical*3,
+                  fontSize: 20,
                 ),),
                 Container(
                   padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*40),
                   width: SizeConfig.blockSizeHorizontal*60,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/frame.png')
+                      image: AssetImage('assets/ink.png')
                     )
                   ),
                 ),
@@ -101,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               borderSide: BorderSide(color: Colors.grey[500])
                             )
                           ),
-                          initialValue: "jaiswalsanskar078@gmail.com",
+                          initialValue: _user.userEmail,
                           enabled: false,
                         ),
 
@@ -110,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // User Name Textfield
                         TextFormField(
                           style: TextStyle(
-                            color: Colors.grey[400],
+                            color: Colors.black.withOpacity(0.48),
                             fontFamily: 'Blinker',
                             fontSize: SizeConfig.blockSizeVertical*3
                           ),
@@ -141,7 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           enabled: true,
-                          controller: _userNameController
+                          controller: userNameController
                           
                         ),
 
@@ -150,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // Team Name Text Field
                         TextFormField(
                           style: TextStyle(
-                            color: Colors.grey[400],
+                            color: Colors.black.withOpacity(0.48),
                             fontFamily: 'Blinker',
                             fontSize: SizeConfig.blockSizeVertical*3
                           ),
@@ -181,14 +187,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             )
                           ),
                           enabled: true,
-                          controller: _teamNameController,
+                          controller: teamNameController,
                         ),
                         SizedBox(height: SizeConfig.blockSizeVertical*5,),
                         RaisedButton(
                           onPressed: (){
-                            print(_teamNameController.text);
+                            print(teamNameController.text);
                             print('lol');
-                            _submit(_user.uIdToken, _userNameController.text, _teamNameController.text, _user.userEmail);
+                            _submit(_user.uIdToken, userNameController.text, teamNameController.text, _user.userEmail);
                             Navigator.of(context).popAndPushNamed(HomeScreen.routeName);
                           },
                           elevation: 100,
