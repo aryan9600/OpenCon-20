@@ -28,6 +28,7 @@ dependencies:
   bubble: ^1.1.9+1
   bouncing_widget: ^1.2.0
   slider_button: ^0.5.0
+  flutter_xlider: ^3.3.1
   
   cupertino_icons: ^0.1.2
 
@@ -49,6 +50,7 @@ flutter:
     - assets/opencon-20-081be2339280.json
     - assets/ink-shape.png
     - assets/ink.png
+    - assets/volume.png
     - .ENV
 
   fonts:

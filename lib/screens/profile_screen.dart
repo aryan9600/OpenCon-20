@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
-
-import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:slider_button/slider_button.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:chirp_flutter/chirp_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateMixin{
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin{
 
   
   String _appKey = DotEnv().env['CHIRP_APP_KEY'];
@@ -37,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
   Stream<DocumentSnapshot> profile;
   
   AnimationController _controller; 
+  Animation<Offset> _offsetAnimation;
 
   bool _started = false; 
   
@@ -70,7 +71,8 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
 
     _controller = AnimationController(
       vsync: this,
-      lowerBound: 0.5,
+      lowerBound: 0,
+      upperBound: 1,
       duration: Duration(milliseconds: 700),
     );
   }
@@ -91,17 +93,8 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
     }
   }
 
-  Widget _buildContainer(double radius) {
-    return Container(
-      width: radius,
-      height: radius,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black.withOpacity(1-_controller.value)),
-        shape: BoxShape.circle,
-        color: Colors.transparent
-      ),
-    );
-  }
+  double _bottom = 10;
+  double _top = null;
 
   @override
   Widget build(BuildContext context) {
@@ -128,73 +121,40 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                     }
                   },
                 ),
-                Container(
-                    height: SizeConfig.screenHeight/3.25,
-                    child: AnimatedBuilder(
-                      animation: CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
-                      builder: (context, child) {
-                        return Stack(
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                            _started ? _buildContainer(SizeConfig.blockSizeVertical*20 * _controller.value) : Container(height: 0 , width: 0),
-                            _started ? _buildContainer(SizeConfig.blockSizeHorizontal*50 * _controller.value): Container(height: 0 , width: 0),
-                            _started ? _buildContainer(SizeConfig.safeBlockHorizontal*70 * _controller.value): Container(height: 0 , width: 0),
-                            Align(
-                                child: BouncingWidget(
-                                  child: Container(
-                                    height: SizeConfig.screenHeight/5,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.lightBlueAccent,
-                                    ),
-                                    child: Center(
-                                      child: Text("Me Hungy!", style: TextStyle(
-                                        fontFamily: 'Blinker',
-                                        fontSize: SizeConfig.blockSizeVertical*3.5
-                                      ),),
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 200),
-                                  onPressed: (){
-                                    setState(() {
-                                      _started = true;
-                                    });
-                                    ChirpSDK.state.then((val){
-                                      print(val);
-                                    });
-                                    print('lol');
-                                    ChirpSDK.onReceived.listen((e) {
-                                      String deliverable = new String.fromCharCodes(e.payload);
-                                      print(deliverable);
-                                      _delivery.addUserToDeliverable(_user.uIdToken, deliverable, _user.userEmail);
-                                      setState(() {
-                                        _started = false;
-                                      });
-                                      // _stopAudioProcessing();
-                                    });
-                                    _controller.repeat();
-                                    
-                                    Future.delayed(Duration(seconds: 10), (){
-                                      setState(() {
-                                        _started = false;
-                                      });
-                                    });
-                                    // ChirpSDK.state.then((val){
-                                    //   if(val != ChirpState.stopped){
-                                    //     _stopAudioProcessing();
-                                    //   }
-                                    // });
-                                  },
-                                ),
-                              
-                            ),
-                          ],
-                        );
-                      },
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      width: 120,
+                      height: 235,
+                      decoration: BoxDecoration(
+                        color: Color(0xffC4C4C4),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(70)
+                      ),
                     ),
-                  ),
-                SizedBox(height: SizeConfig.blockSizeVertical*5,),
-                
+                    AnimatedPositioned(
+                      duration: Duration(milliseconds: 500),
+                      // top: 0,
+                      bottom: _bottom,
+                      left: SizeConfig.blockSizeHorizontal*2,
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            print('lol');
+                            _bottom=110;
+                            // _top = SizeConfig.blockSizeVertical/5;
+                          });
+                        },
+                        child: Center(
+                          child: Container(
+                            child: Image.asset('assets/volume.png'),
+                            width: 110,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
                 // ProfileCard(name: 'Sanskar Jaiswal', teamName: 'Team Alpha', email: 'jaiswalsanskar087@gmail.com'),
                 SizedBox(height: SizeConfig.blockSizeVertical*6),
                 Container(
