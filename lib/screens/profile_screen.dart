@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:slider_button/slider_button.dart';
-import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:chirp_flutter/chirp_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   Animation<Offset> _offsetAnimation;
 
   bool _started = false; 
+  double _bottom = 10;
   
 
   Future<void> _initChirp() async {
@@ -73,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       vsync: this,
       lowerBound: 0,
       upperBound: 1,
-      duration: Duration(milliseconds: 700),
+      duration: Duration(milliseconds: 300),
     );
   }
 
@@ -93,8 +92,23 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     }
   }
 
-  double _bottom = 10;
-  double _top = null;
+  void scanStuff(String userID, String email, Deliverables help){
+    _startAudioProcessing();
+    ChirpSDK.onReceived.listen((e) {
+      String deliverable = new String.fromCharCodes(e.payload);
+      print(deliverable);
+      help.addUserToDeliverable(userID, deliverable, email);
+      setState(() {
+        _started = false;
+      });
+      _stopAudioProcessing();
+    });
+    Future.delayed(Duration(seconds: 10), (){
+      setState(() {
+        _started = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     }
                   },
                 ),
+                SizedBox(height: SizeConfig.blockSizeVertical*5,),
                 Stack(
                   children: <Widget>[
                     Container(
@@ -135,16 +150,24 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     AnimatedPositioned(
                       duration: Duration(milliseconds: 500),
                       // top: 0,
-                      bottom: _bottom,
+                      bottom: _started ? 110 : 10,
                       left: SizeConfig.blockSizeHorizontal*2,
                       child: GestureDetector(
-                        onTap: (){
+                        onVerticalDragUpdate: (drag){
                           setState(() {
                             print('lol');
-                            _bottom=110;
-                            // _top = SizeConfig.blockSizeVertical/5;
+                            _started = true;
+                            scanStuff(_user.uIdToken, _user.userEmail, _delivery);
                           });
                         },
+                        // onTap: (){
+                        //   setState(() {
+                        //     print('lol');
+                        //     _started = true;
+                            
+                        //     // _top = SizeConfig.blockSizeVertical/5;
+                        //   });
+                        // },
                         child: Center(
                           child: Container(
                             child: Image.asset('assets/volume.png'),
@@ -155,48 +178,33 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     )
                   ],
                 ),
+                SizedBox(height: SizeConfig.blockSizeVertical*2),
+                Text('Slide the button to scan', style: TextStyle(
+                      color: Color(0xff00B7D0),
+                      fontSize: 16,
+                      fontFamily: 'Blinker'
+                  )),
                 // ProfileCard(name: 'Sanskar Jaiswal', teamName: 'Team Alpha', email: 'jaiswalsanskar087@gmail.com'),
-                SizedBox(height: SizeConfig.blockSizeVertical*6),
-                Container(
-                  height: SizeConfig.blockSizeVertical*7,
-                  width: SizeConfig.blockSizeHorizontal*60,
-                  child: RaisedButton(
-                    onPressed: (){
+                SizedBox(height: SizeConfig.blockSizeVertical*4),
+                GestureDetector(
+                    onTap: (){
                       Provider.of<Auth>(context, listen: false).signOutGoogle();
                       Navigator.of(context).popAndPushNamed(AuthScreen.routeName);
                     },
                     child: Text('Logout', style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color(0xff00B7D0),
                       color: Color(0xff00B7D0),
-                      fontSize: SizeConfig.blockSizeVertical*3
-                    )),
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical),
-                      side: BorderSide(color: Color(0xff00B7D0))
-                    ),
-                  ),
-                )
+                      fontSize: 16,
+                      fontFamily: 'Blinker',
+                      fontWeight: FontWeight.w500
+                  )),
+                ),
               ],
             ),
           ),
         )
       ),
-    );
-  }
-}
-
-class BouncingAnimation extends AnimatedWidget {
-  BouncingAnimation({Key key, Animation<double> animation})
-      : super(key: key, listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-     final animation = listenable as Animation<double>;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: animation.value,
-      width: animation.value,
-      child: FlutterLogo(),
     );
   }
 }
