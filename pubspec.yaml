@@ -49,6 +49,7 @@ flutter:
     - assets/opencon-20-081be2339280.json
     - assets/ink-shape.png
     - assets/ink.png
+    - assets/volume.png
     - assets/chat.png
     - assets/back.png
     - assets/faq.png
