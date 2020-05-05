@@ -12,7 +12,7 @@ class TimeLine extends StatelessWidget {
   }) : super(key: key);
 
   final Stream<QuerySnapshot> events;
-  final HelperFunctions help;
+  final HelperFunctions help; 
 
   @override
   Widget build(BuildContext context) {
@@ -42,17 +42,19 @@ class TimeLine extends StatelessWidget {
                   switch (snapshot.connectionState){
                     case ConnectionState.waiting: return Text('Fetching');
                     default:
+                      snapshot.data.documents.sort((a, b) => a['time'].compareTo(b['time']));
                       return ListView(
                         shrinkWrap: true,
                         primary: false,
-                        children: snapshot.data.documents.map((DocumentSnapshot document) {
-                          return new TimeLineRow(
-                            date:  help.timestampToDate(document['time']),
-                            time: help.timestampToTime(document['time']),
-                            name: document.documentID,
-                            location: document['venue'],
-                          );
-                        }).toList(),
+                        children: snapshot.data.documents
+                          .map((DocumentSnapshot document) {
+                            return new TimeLineRow(
+                              date:  help.timestampToDate(document['time']),
+                              time: help.timestampToTime(document['time']),
+                              name: document.documentID,
+                              location: document['venue'],
+                            );
+                          }).toList(),
                       );
                   }
                 },
