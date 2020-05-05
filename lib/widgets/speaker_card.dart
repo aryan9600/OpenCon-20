@@ -20,20 +20,19 @@ class SpeakerCard extends StatelessWidget {
       width: SizeConfig.screenWidth/1.3,    
       height: SizeConfig.screenHeight/4,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*5),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.009),
             blurRadius: 4,
             offset: Offset(2, 2)
-
           ),
         ]
       ),
       child: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*3)
+          borderRadius: BorderRadius.circular(12)
         ),
         child: Container(
           padding: EdgeInsets.all(SizeConfig.blockSizeVertical*1.5),
