@@ -139,8 +139,8 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                   ],
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(SizeConfig.blockSizeVertical*5),
-                    topRight: Radius.circular(SizeConfig.blockSizeVertical*5,)
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24)
                   )
                 ),
                 child: ListView.separated(
@@ -207,7 +207,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
     return new Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical*10),
+        preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical*15),
         child: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -216,40 +216,59 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
             onTap: (){
               Navigator.pop(context, SlideRightRoute);
             },
-            child: Container(
-              padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal*3.5, SizeConfig.blockSizeVertical*2, 0, 0),
-              child: Text('< Back', style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Blinker',
-                fontSize: SizeConfig.blockSizeVertical*2.5,
-                fontWeight: FontWeight.w600
-              ),),
-            ),
+            child: OverflowBox(
+              minWidth: 30,
+              maxWidth: 60,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Row(
+                  children: <Widget>[
+                    Image.asset("assets/back.png", height: 12, width: 12,),
+                    Text(' Back', style: TextStyle(
+                      fontFamily: 'Blinker',
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black
+                    ),)
+                  ],
+                ),
+              ),
+            )
           ),
           actions: <Widget>[
             GestureDetector(
               onTap: () {
                 _showSheet();
               },
-              child: Container(
-                padding: EdgeInsets.fromLTRB(0, SizeConfig.blockSizeVertical*2, SizeConfig.blockSizeHorizontal*4, 0),
-                child: Text('FAQ >', style: TextStyle(
-                  color: Color(0xff00B7D0),
-                  fontFamily: 'Blinker',
-                  fontSize: SizeConfig.blockSizeVertical*3,
-                  fontWeight: FontWeight.w600
-                ),),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Row(
+                  children: <Widget>[
+                    Text('FAQ ', style: TextStyle(
+                      fontFamily: 'Blinker',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff00B7D0)
+                    ),),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Image.asset("assets/faq.png", height: 16, width: 16,),
+                    ),
+                  ],
+                ),
               ),
             )
           ],
-          title: Container(
-            padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*4),
-            child: Text('Contact Us',
-              style: TextStyle(
-                fontFamily: 'Blinker',
-                fontSize: SizeConfig.blockSizeVertical*4,
-                color: Colors.black,
-                fontWeight: FontWeight.w600
+          flexibleSpace: Center(
+            child: Container(
+              padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*5),
+              child: Text('Contact Us',
+                style: TextStyle(
+                  fontFamily: 'Blinker',
+                  fontSize: 32,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600
+                ),
               ),
             ),
           )

@@ -27,7 +27,7 @@ dependencies:
   flutter_tts: ^1.0.0
   bubble: ^1.1.9+1
   bouncing_widget: ^1.2.0
-
+  
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
@@ -46,6 +46,11 @@ flutter:
     - assets/speaking.png
     - assets/not-speaking.png
     - assets/opencon-20-081be2339280.json
+    - assets/ink-shape.png
+    - assets/ink.png
+    - assets/chat.png
+    - assets/back.png
+    - assets/faq.png
     - .ENV
 
   fonts:
