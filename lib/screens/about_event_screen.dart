@@ -140,8 +140,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                                 fontSize: SizeConfig.blockSizeVertical*2.5
                               ),), 
                             SizedBox(width: SizeConfig.blockSizeVertical*2,),
-                            Icon(Icons.chat_bubble_outline, color: Colors.white,)
-                            
+                            Image.asset("assets/chat.png",)
                           ],
                         ),
                         color: Color(0xff00B7D0),
