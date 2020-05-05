@@ -27,6 +27,7 @@ dependencies:
   flutter_tts: ^1.0.0
   bubble: ^1.1.9+1
   bouncing_widget: ^1.2.0
+  sliding_up_panel: ^1.0.2
   
   cupertino_icons: ^0.1.2
 
@@ -51,6 +52,7 @@ flutter:
     - assets/chat.png
     - assets/back.png
     - assets/faq.png
+    - assets/send.png
     - .ENV
 
   fonts:
