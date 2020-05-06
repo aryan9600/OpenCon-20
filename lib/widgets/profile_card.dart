@@ -21,7 +21,7 @@ class ProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[400].withOpacity(0.4),
+            color: Colors.grey[400].withOpacity(0.2),
             blurRadius: 7.5
           ),
         ]
@@ -100,30 +100,47 @@ class ProfileCard extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal*7, SizeConfig.blockSizeVertical*2, 0, 0),
-                child: RichText(
-                  text: TextSpan(
+                // child: RichText(
+                //   softWrap: false,
+                //   overflow: TextOverflow.ellipsis,
+                //   text: TextSpan(
+                //     style: TextStyle(
+                //       fontSize: SizeConfig.blockSizeVertical*2.3,
+                //       color: Colors.white
+                //     ),
+                //     children: [
+                //       TextSpan(
+                //         text: 'Email ',
+                //         style: TextStyle(color: Colors.black)
+                //       ),
+                //       TextSpan(
+                //         text: ': ',
+                //         style: TextStyle(color: Colors.black)
+                //       ),
+                //       TextSpan(
+                //         text: "sanskar.jaiswal2018@vitstudent.ac.in",
+                //         style: TextStyle(
+                //           color: Color(0xff00B7D0).withOpacity(0.7)
+                //         )
+                //       )
+                //     ]
+                //   ),
+                // )
+                child: Row(children: <Widget>[
+                  Text('Email  :  ', style: TextStyle(
+                    fontFamily: 'Blinker',
+                    fontSize: SizeConfig.blockSizeVertical*2.3,
+                    color: Colors.black
+                  ),),
+                  Flexible(
+                    child: Text(email, overflow: TextOverflow.ellipsis,
                     style: TextStyle(
+                      fontFamily: 'Blinker',
                       fontSize: SizeConfig.blockSizeVertical*2.3,
-                      color: Colors.white
-                    ),
-                    children: [
-                      TextSpan(
-                        text: 'Email ',
-                        style: TextStyle(color: Colors.black)
-                      ),
-                      TextSpan(
-                        text: ': ',
-                        style: TextStyle(color: Colors.black)
-                      ),
-                      TextSpan(
-                        text: email,
-                        style: TextStyle(
-                          color: Color(0xff00B7D0).withOpacity(0.7)
-                        )
-                      )
-                    ]
-                  ),
-                )
+                      color: Color(0xff00B7D0)
+                    ),),
+                  )
+                ],),
               ),
             ],
           ),

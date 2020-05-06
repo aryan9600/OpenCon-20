@@ -16,7 +16,8 @@ class ChatMessage extends StatelessWidget {
         // margin: const EdgeInsets.only(right: 10.0),
         child: new CircleAvatar(
           backgroundColor: Color(0xff00B7D0),
-          child: new Image.asset("assets/opencon_logo.png", fit: BoxFit.fitHeight,)
+          radius: 25,
+          child: new Image.asset("assets/opencon_logo.png", fit: BoxFit.contain, width: 18,)
         ),
       ),
       new Expanded(
@@ -74,8 +75,9 @@ class ChatMessage extends StatelessWidget {
       new Container(
         margin: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
         child: new CircleAvatar(
+          radius: 25,
           backgroundColor: Color(0xff00B7D0),
-          child: new Text(this.name[0], style: TextStyle(color: Colors.white))
+          child: new Text(this.name[0], style: TextStyle(color: Colors.white, fontFamily: 'Blinker', fontSize: 20))
         ),
       ),
     ];

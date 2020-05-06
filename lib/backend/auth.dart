@@ -21,7 +21,6 @@ class Auth with ChangeNotifier {
 	String _userEmail;
   String _userName;
 
-
 	bool get isAuth {
 		return uIdToken != null;
 	}
@@ -89,6 +88,7 @@ class Auth with ChangeNotifier {
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('uId', _uIdToken);
+    // prefs.setBool('googleSignIn', false);
 		return user.user;
 	}
 	
@@ -118,6 +118,7 @@ class Auth with ChangeNotifier {
 			notifyListeners();
 			final prefs = await SharedPreferences.getInstance();
 			prefs.setString('uId', _uIdToken);
+      // prefs.setBool('googleSignIn', true);
 			return user.user;
 		}
 		catch(error){
@@ -139,9 +140,13 @@ class Auth with ChangeNotifier {
 	}
 
   // method to sign out the user.
-  Future<void> signOutGoogle() async{
+  Future<void> signOut() async{
 		try{
-			await googleSignIn.signOut();
+      final prefs = await SharedPreferences.getInstance();
+      // bool googleSigned = prefs.getBool("googleSignIn");
+			await FirebaseAuth.instance.signOut();
+      // prefs.remove('googleSignIn');
+		  prefs.remove('uId');
 			print("User Signed Out");
 		} catch(error){
 			throw error;

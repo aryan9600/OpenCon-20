@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:open_con/screens/timeline.dart';
 import 'package:open_con/utils/helper_functions.dart';
 import 'package:open_con/utils/size_config.dart';
+import 'package:open_con/widgets/scale_tabbar.dart';
 
 class TimelineScreen extends StatefulWidget {
 
@@ -10,15 +11,18 @@ class TimelineScreen extends StatefulWidget {
   _TimelineScreenState createState() => _TimelineScreenState();
 }
 
-class _TimelineScreenState extends State<TimelineScreen> {
+class _TimelineScreenState extends State<TimelineScreen> with SingleTickerProviderStateMixin {
   
   Stream<QuerySnapshot> dayOne;
   Stream<QuerySnapshot> dayTwo;
+  TabController _tabController;
   @override
   initState(){
     super.initState();
     dayOne = Firestore.instance.collection("dayOne").snapshots();
     dayTwo = Firestore.instance.collection("dayTwo").snapshots();
+    _tabController = TabController(vsync: this, length: 2);
+
   }
 
   @override
@@ -31,11 +35,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
+          preferredSize: Size.fromHeight(65),
           child: AppBar(
             elevation: 0,
             backgroundColor: Colors.white10,
-            bottom: TabBar(
+            bottom: ScaleTabBar(
               indicatorColor: Colors.transparent,
               isScrollable: true,
               unselectedLabelStyle: TextStyle(
@@ -50,11 +54,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
               labelColor: Color(0xff00B7D0),
               tabs: <Widget>[
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*2.5),
+                  padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal*2.5, 0, SizeConfig.blockSizeHorizontal*2.5, 5),
                   child: Text("Day 1",),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*2.5),
+                  padding: EdgeInsets.fromLTRB(SizeConfig.blockSizeHorizontal*2.5, 0, SizeConfig.blockSizeHorizontal*2.5, 5),
                   child: Text("Day 2",),
                 ),
               ],

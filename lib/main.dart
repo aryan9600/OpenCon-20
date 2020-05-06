@@ -7,6 +7,7 @@ import 'package:open_con/screens/chat_screen.dart';
 import 'package:open_con/screens/home_screen.dart';
 import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
+import 'package:open_con/screens/splash_screen.dart';
 import 'package:open_con/screens/timeline_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -32,13 +33,17 @@ class MyApp extends StatelessWidget {
 		    MaterialApp(
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
-		    	home: AuthScreen(),
+		    	home: auth.isAuth 
+            ? HomeScreen()
+            : 
+            FutureBuilder(
+              future: auth.autoLogin(),
+              builder: (ctx, snap) => snap.connectionState == ConnectionState.waiting ? SplashScreen() : AuthScreen()
+            ),
 					routes: {
 						RegisterScreen.routeName: (ctx) => RegisterScreen(),
-						ProfileScreen.routeName: (ctx) => ProfileScreen(),
             AboutEventScreen.routeName: (ctx) => AboutEventScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
-            AuthScreen.routeName: (ctx) => AuthScreen()
 					},
 		    )
 		  ),

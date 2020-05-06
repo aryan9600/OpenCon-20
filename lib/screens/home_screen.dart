@@ -86,23 +86,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin<H
           }).toList(),
         ),
       ),
-      bottomNavigationBar: HighlightNavigationBar(
-        onchanged: (index){
+      bottomNavigationBar:BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info_outline),
+            title: Text('About'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timeline),
+            title: Text('Timeline'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            title: Text('Profile'),
+          ),
+        ],
+        currentIndex: _currentIndex,
+        showUnselectedLabels: false,
+        selectedItemColor: Color(0xff00B7D0),
+        unselectedItemColor: Colors.black,
+        onTap: (index){
           setState(() {
             _currentIndex = index;
           });
         },
-        height: SizeConfig.blockSizeVertical*9,
-        // backgroundColor: Colors.white,
-        // selectedIconColor: Color(0xff00B7D0),
-        // highLightColor: Color(0xff00B7D0),
-        // duration: Duration(milliseconds: 300),
-        icons: [
-          IconButton(icon: Icon(Icons.info_outline), onPressed: (){}),
-          IconButton(icon: Icon(Icons.timeline), onPressed: (){}),
-          IconButton(icon: Icon(Icons.person_outline), onPressed: (){}),
-        ],
-      ),
+      )
     );
   }
 }

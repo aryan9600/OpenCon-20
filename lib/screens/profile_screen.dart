@@ -119,6 +119,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         child: SingleChildScrollView(
           child: Center(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 SizedBox(height: SizeConfig.blockSizeVertical*5,),
                 StreamBuilder<DocumentSnapshot>(
@@ -188,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 SizedBox(height: SizeConfig.blockSizeVertical*4),
                 GestureDetector(
                     onTap: (){
-                      Provider.of<Auth>(context, listen: false).signOutGoogle();
+                      Provider.of<Auth>(context, listen: false).signOut();
                       Navigator.of(context).popAndPushNamed(AuthScreen.routeName);
                     },
                     child: Text('Logout', style: TextStyle(
@@ -200,6 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       fontWeight: FontWeight.w500
                   )),
                 ),
+                SizedBox(height: SizeConfig.blockSizeVertical*4),
               ],
             ),
           ),

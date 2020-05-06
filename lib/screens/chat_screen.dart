@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:open_con/backend/auth.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/chat_message.dart';
 import 'package:open_con/widgets/slide_transition.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 
 class ChatScreen extends StatefulWidget {
+  final String userName;
+
+  const ChatScreen({Key key, this.userName}) : super(key: key);
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateMixin{
 
-  final List<ChatMessage> _messages = <ChatMessage>[];
+  final List<ChatMessage> _messages = <ChatMessage>[
+    ChatMessage(
+      text: "Hey there! How may I help you? ;)",
+      name: "Bot",
+      type: false,
+    )
+  ];
   final TextEditingController _textController = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String userName = '';
   PanelController _pc = new PanelController();
 
   @override
   initState(){
     super.initState();
-    // final user = Provider.of<Auth>(context, listen: false);
-    // userName = user.userName; 
   }
 
   Widget _buildTextComposer() {
@@ -94,10 +102,11 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
       _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Please type something dumfuck')));
       return;
     }
+    print("my user ${widget.userName} ss");
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
-      name: "Sanskar",
+      name: widget.userName,
       type: true,
     );
     setState(() {
@@ -166,10 +175,10 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Row(
                           children: <Widget>[
-                            Image.asset("assets/back.png", height: 12, width: 12,),
+                            Image.asset("assets/back.png", height: 16, width: 16,),
                             Text(' Back', style: TextStyle(
                               fontFamily: 'Blinker',
-                              fontSize: 16,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.black
                             ),)

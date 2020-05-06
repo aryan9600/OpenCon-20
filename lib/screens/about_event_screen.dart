@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:open_con/backend/auth.dart';
 import 'package:open_con/screens/chat_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/speaker_card.dart';
 import 'package:open_con/widgets/sponsor_card.dart';
+import 'package:provider/provider.dart';
 
 class AboutEventScreen extends StatefulWidget {
 
@@ -18,6 +20,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
 
   Stream<QuerySnapshot> speakers;
   Stream<QuerySnapshot> sponsors;
+  SwiperController _spekaersController = SwiperController();
 
   @override
   void initState() {
@@ -28,7 +31,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
     
    @override
   Widget build(BuildContext context) {
-    
+    final userName = Provider.of<Auth>(context, listen: false).userName;
     SizeConfig().init(context);
     return Scaffold(
       // backgroundColor: Color(0xffE5E5E5),
@@ -41,7 +44,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*5),
+                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*3),
                     child: Text('Speakers', style: TextStyle(
                       fontFamily: 'Blinker',
                       fontWeight: FontWeight.w600,
@@ -60,25 +63,35 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                         default:
                           return Container(
                             height: SizeConfig.screenHeight/2.75,
-                            child: Swiper(
-                              itemCount: snapshot.data.documents.length,
-                              itemBuilder: (BuildContext ctx, int index) {
-                                return Container(
-                                  padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
-                                  child: SpeakerCard(
-                                    name: snapshot.data.documents[index]['name'],
-                                    description: snapshot.data.documents[index]['description'],
-                                    imgUrl: snapshot.data.documents[index]['imgUrl'],
-                                    company: snapshot.data.documents[index]['company'],
-                                    designation: snapshot.data.documents[index]['designation'],
-                                    status: snapshot.data.documents[index]['status']
-                                  ),
-                                );
+                            child: GestureDetector(
+                              onTap: (){
+                                print('ur mium');
+                                _spekaersController.stopAutoplay();
                               },
-                              viewportFraction: 0.55,
-                              scale: 0.6,
-                              // autoplay: true,
-                              // autoplayDelay: 3000,
+                              child: Swiper(
+                                onIndexChanged: (ind){
+                                  _spekaersController.startAutoplay();
+                                },
+                                controller: _spekaersController,
+                                itemCount: snapshot.data.documents.length,
+                                itemBuilder: (BuildContext ctx, int index) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
+                                    child: SpeakerCard(
+                                        name: snapshot.data.documents[index]['name'],
+                                        description: snapshot.data.documents[index]['description'],
+                                        imgUrl: snapshot.data.documents[index]['imgUrl'],
+                                        company: snapshot.data.documents[index]['company'],
+                                        designation: snapshot.data.documents[index]['designation'],
+                                        status: snapshot.data.documents[index]['status']
+                                      ),
+                                  );
+                                },
+                                viewportFraction: 0.55,
+                                scale: 0.6,
+                                // autoplay: true,
+                                autoplayDelay: 1000,
+                              ),
                             ),
                           ); 
                       }
@@ -113,6 +126,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                               },
                               viewportFraction: 0.35,
                               scale: 1,
+
                               // autoplay: true,
                               // autoplayDelay: 3000,
                             ),
@@ -123,29 +137,29 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                   SizedBox(height: SizeConfig.blockSizeVertical*5,),
                   Center(
                     child: Container(
-                      width: SizeConfig.screenWidth/1.7,
-                      height: SizeConfig.blockSizeVertical*9,
+                      width: 240,
+                      height: 48,
                       child: RaisedButton(
                         onPressed: (){
                           Navigator.push(
-                            context, CupertinoPageRoute(builder: (context) => ChatScreen()));
+                            context, CupertinoPageRoute(builder: (context) => ChatScreen(userName: userName,)));
                         },
                         elevation: 100,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text('Ask a Doubt', style: TextStyle(
+                            Text('Ask a Doubt   ', style: TextStyle(
                                 fontFamily: 'Blinker',
                                 color: Colors.white,
                                 fontSize: SizeConfig.blockSizeVertical*2.5
                               ),), 
-                            SizedBox(width: SizeConfig.blockSizeVertical*2,),
-                            Image.asset("assets/chat.png",)
+                            // SizedBox(width: SizeConfig.blockSizeVertical*2,),
+                            Image.asset("assets/chat.png", width: 24, height: 20,)
                           ],
                         ),
                         color: Color(0xff00B7D0),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical*2),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                     ),

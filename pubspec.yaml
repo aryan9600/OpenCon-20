@@ -28,7 +28,8 @@ dependencies:
   bubble: ^1.1.9+1
   bouncing_widget: ^1.2.0
   sliding_up_panel: ^1.0.2
-  
+  flip_card: ^0.4.4
+    
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
