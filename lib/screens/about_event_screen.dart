@@ -8,6 +8,7 @@ import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/speaker_card.dart';
 import 'package:open_con/widgets/sponsor_card.dart';
 import 'package:provider/provider.dart';
+import 'dart:math' as math;
 
 class AboutEventScreen extends StatefulWidget {
 
@@ -20,7 +21,7 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
 
   Stream<QuerySnapshot> speakers;
   Stream<QuerySnapshot> sponsors;
-  SwiperController _spekaersController = SwiperController();
+  SwiperController _speakersController = SwiperController();
 
   @override
   void initState() {
@@ -63,40 +64,33 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                         default:
                           return Container(
                             height: SizeConfig.screenHeight/2.75,
-                            child: GestureDetector(
-                              onTap: (){
-                                print('ur mium');
-                                _spekaersController.stopAutoplay();
+                            child: Swiper(
+                              physics: CustomScrollPhysics(),
+                              duration: 1200,
+                              controller: _speakersController,
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (BuildContext ctx, int index) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
+                                  child: SpeakerCard(
+                                      name: snapshot.data.documents[index]['name'],
+                                      description: snapshot.data.documents[index]['description'],
+                                      imgUrl: snapshot.data.documents[index]['imgUrl'],
+                                      company: snapshot.data.documents[index]['company'],
+                                      designation: snapshot.data.documents[index]['designation'],
+                                      status: snapshot.data.documents[index]['status']
+                                    ),
+                                );
                               },
-                              child: Swiper(
-                                onIndexChanged: (ind){
-                                  _spekaersController.startAutoplay();
-                                },
-                                controller: _spekaersController,
-                                itemCount: snapshot.data.documents.length,
-                                itemBuilder: (BuildContext ctx, int index) {
-                                  return Container(
-                                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
-                                    child: SpeakerCard(
-                                        name: snapshot.data.documents[index]['name'],
-                                        description: snapshot.data.documents[index]['description'],
-                                        imgUrl: snapshot.data.documents[index]['imgUrl'],
-                                        company: snapshot.data.documents[index]['company'],
-                                        designation: snapshot.data.documents[index]['designation'],
-                                        status: snapshot.data.documents[index]['status']
-                                      ),
-                                  );
-                                },
-                                viewportFraction: 0.55,
-                                scale: 0.6,
-                                // autoplay: true,
-                                autoplayDelay: 1000,
-                              ),
+                              viewportFraction: 0.55,
+                              scale: 0.6,
+                              // autoplay: true,
+                              // autoplayDelay: 1000,
                             ),
                           ); 
-                      }
-                    },
-                  ),
+                        }
+                      },
+                    ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*3),
                     child: Text('Sponsors', style: TextStyle(
@@ -170,6 +164,50 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
             ),
           )
       ),
+    );
+  }
+}
+
+class CustomSimulation extends Simulation {
+  final double initPosition;
+  final double velocity;
+
+  CustomSimulation({this.initPosition, this.velocity});
+
+  @override
+  double x(double time) {
+    var max =
+        math.max(math.min(initPosition, 0.0), initPosition + velocity * time);
+
+    print(max.toString());
+
+    return max;
+  }
+
+  @override
+  double dx(double time) {
+    print(velocity.toString());
+    return velocity;
+  }
+
+  @override
+  bool isDone(double time) {
+    return false;
+  }
+}
+
+class CustomScrollPhysics extends ScrollPhysics {
+  @override
+  ScrollPhysics applyTo(ScrollPhysics ancestor) {
+    return CustomScrollPhysics();
+  }
+
+  @override
+  Simulation createBallisticSimulation(
+      ScrollMetrics position, double velocity) {
+    return CustomSimulation(
+      initPosition: position.pixels,
+      velocity: velocity,
     );
   }
 }

@@ -3,14 +3,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_con/backend/auth.dart';
 import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/screens/auth_screen.dart';
-import 'package:open_con/screens/chat_screen.dart';
 import 'package:open_con/screens/home_screen.dart';
-import 'package:open_con/screens/profile_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/screens/splash_screen.dart';
-import 'package:open_con/screens/timeline_screen.dart';
-import 'package:open_con/utils/size_config.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/about_event_screen.dart';
