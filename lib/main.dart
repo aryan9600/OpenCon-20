@@ -4,6 +4,7 @@ import 'package:open_con/backend/auth.dart';
 import 'package:open_con/screens/about_event_screen.dart';
 import 'package:open_con/screens/auth_screen.dart';
 import 'package:open_con/screens/home_screen.dart';
+import 'package:open_con/screens/music_screen.dart';
 import 'package:open_con/screens/register_screen.dart';
 import 'package:open_con/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
 		    	debugShowCheckedModeBanner: false,
 		    	title: 'OpenCon\'20',
 		    	home: auth.isAuth 
-            ? HomeScreen()
+            ? MusicScreen()
             : 
             FutureBuilder(
               future: auth.autoLogin(),

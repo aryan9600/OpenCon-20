@@ -120,9 +120,6 @@ class _AboutEventScreenState extends State<AboutEventScreen> {
                               },
                               viewportFraction: 0.35,
                               scale: 1,
-
-                              // autoplay: true,
-                              // autoplayDelay: 3000,
                             ),
                           ); 
                       }

@@ -6,6 +6,8 @@ import 'package:open_con/screens/timeline_screen.dart';
 import 'package:open_con/utils/size_config.dart';
 import 'package:open_con/widgets/nav_bar.dart';
 
+import 'music_screen.dart';
+
 class ScreenWithIndex{
   final Widget screen;
   final int index;
@@ -40,6 +42,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin<H
       screen: ProfileScreen(),
       index: 2
     ),
+    ScreenWithIndex(
+      screen: MusicScreen(),
+      index: 3
+    )
   ];
 
   @override
@@ -100,6 +106,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin<H
             icon: Icon(Icons.person_outline),
             title: Text('Profile'),
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.music_note),
+            title: Text("Music")
+          )
         ],
         currentIndex: _currentIndex,
         showUnselectedLabels: false,
